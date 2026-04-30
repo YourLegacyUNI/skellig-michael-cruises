@@ -1,0 +1,2636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skellig Michael Cruises — Paul Devane · Portmagee, Kerry</title>
+    <meta name="description" content="Boat tours to Skellig Michael, Kerry. Landing tours and Eco Cruises from Portmagee Marina. Book your 2026 tour with Paul Devane.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black:     #07090c;
+            --dark:      #0d1017;
+            --slate:     #141820;
+            --ocean:     #0d1e2e;
+            --teal:      #1b6b8a;
+            --teal-lt:   #2fa8cc;
+            --teal-glow: rgba(27,107,138,0.1);
+            --gold:      #c9a96e;
+            --gold-lt:   #e8d4a8;
+            --white:     #f0ede8;
+            --muted:     rgba(240,237,232,0.55);
+            --faint:     rgba(240,237,232,0.08);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ═══════════════ NAV ═══════════════ */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            padding: 1.6rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.5s, border-color 0.5s;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(7, 9, 12, 0.88);
+            backdrop-filter: blur(16px);
+            border-color: rgba(201,169,110,0.12);
+        }
+
+        .nav-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+
+        .nav-cta {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-decoration: none;
+            border: 1px solid rgba(201,169,110,0.35);
+            padding: 0.55rem 1.2rem;
+            transition: background 0.25s, color 0.25s;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* ═══════════════ HERO ═══════════════ */
+
+        /* Tall track — slow cinematic scroll */
+        .hero-track {
+            position: relative;
+            height: 800vh;
+        }
+
+        /* Buffer loader */
+        #bufferOverlay {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            background: rgba(7,9,12,0.85);
+            transition: opacity 0.8s ease;
+        }
+
+        #bufferOverlay.hidden { opacity: 0; pointer-events: none; }
+
+        .buffer-text {
+            font-size: 0.65rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.5);
+        }
+
+        .buffer-bar {
+            width: 160px;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buffer-fill {
+            position: absolute;
+            left: 0; top: 0; height: 100%;
+            width: 0%;
+            background: var(--gold);
+            transition: width 0.2s linear;
+        }
+
+        /* Sticky frame — pinned while track scrolls past */
+        .hero-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #heroVideo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(to bottom,
+                    rgba(7,9,12,0.15) 0%,
+                    rgba(7,9,12,0.0)  30%,
+                    rgba(7,9,12,0.45) 75%,
+                    rgba(7,9,12,1)    100%
+                );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 1.5rem;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 1.4s cubic-bezier(0.22,1,0.36,1),
+                        transform 1.4s cubic-bezier(0.22,1,0.36,1);
+        }
+
+        .hero-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll hint — fades out once scrolling begins */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            transition: opacity 0.7s;
+        }
+
+        .scroll-hint.hidden { opacity: 0; pointer-events: none; }
+
+        .scroll-hint span {
+            font-size: 0.6rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.45);
+        }
+
+        .scroll-hint-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: linePulse 2.2s ease infinite;
+        }
+
+        .hero-eyebrow {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.6rem;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4rem, 9vw, 9.5rem);
+            font-weight: 300;
+            line-height: 0.95;
+            letter-spacing: 0.04em;
+            color: var(--white);
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: rgba(240,237,232,0.6);
+        }
+
+        .hero-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2.2vw, 1.45rem);
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(240,237,232,0.7);
+            letter-spacing: 0.04em;
+            margin-bottom: 3.2rem;
+            line-height: 1.5;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.95rem 2.4rem;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.28s ease;
+            cursor: pointer;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-lt);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(201,169,110,0.22);
+        }
+
+        .btn-ghost {
+            border: 1px solid rgba(240,237,232,0.35);
+            color: var(--white);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .scroll-cue {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            opacity: 0;
+            animation: cueFade 0.8s ease 4.5s forwards;
+        }
+
+        .scroll-cue span {
+            font-size: 0.6rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.4);
+        }
+
+        .scroll-cue-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: linePulse 2.2s ease infinite;
+        }
+
+        @keyframes cueFade {
+            to { opacity: 1; }
+        }
+
+        @keyframes linePulse {
+            0%,100% { opacity: 0.25; transform: scaleY(0.8); }
+            50%      { opacity: 1;    transform: scaleY(1); }
+        }
+
+        /* ═══════════════ REVEAL ═══════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.95s cubic-bezier(0.22,1,0.36,1),
+                        transform 0.95s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal.visible       { opacity: 1; transform: none; }
+        .reveal-d1            { transition-delay: 0.1s; }
+        .reveal-d2            { transition-delay: 0.22s; }
+        .reveal-d3            { transition-delay: 0.34s; }
+
+        /* ═══════════════ UTILITIES ═══════════════ */
+        .label {
+            display: block;
+            font-size: 0.62rem;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.6rem);
+            font-weight: 300;
+            line-height: 1.12;
+            color: var(--white);
+        }
+
+        .rule {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin: 1.8rem 0;
+            opacity: 0.5;
+        }
+
+        .divider-line {
+            width: 1px;
+            height: 72px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            margin: 0 auto;
+        }
+
+        /* ═══════════════ INTRO ═══════════════ */
+        .intro {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 5.5rem 2rem;
+            text-align: center;
+        }
+
+        .intro p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.75;
+            color: rgba(240,237,232,0.8);
+        }
+
+        .intro .accent { color: var(--gold); font-style: normal; }
+
+        /* ═══════════════ TOURS ═══════════════ */
+        .tours-section {
+            padding: 5rem 3rem 7rem;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .tours-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .tours-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px;
+            background: rgba(201,169,110,0.08);
+        }
+
+        .tour-card {
+            background: var(--dark);
+            padding: 3.5rem 3rem 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+        }
+
+        .tour-card:hover { transform: translateY(-5px); }
+
+        .tour-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .tour-card:hover::after { opacity: 1; }
+
+        .tour-tag {
+            display: inline-block;
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(201,169,110,0.3);
+            padding: 0.3rem 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tour-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.1rem;
+            font-weight: 300;
+            line-height: 1.15;
+            color: var(--white);
+            margin-bottom: 1.4rem;
+        }
+
+        .tour-desc {
+            font-size: 0.88rem;
+            line-height: 1.85;
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        .tour-facts {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            border-top: 1px solid var(--faint);
+        }
+
+        .tour-facts li {
+            font-size: 0.8rem;
+            color: rgba(240,237,232,0.65);
+            padding: 0.65rem 0;
+            border-bottom: 1px solid var(--faint);
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+        }
+
+        .tour-facts li::before {
+            content: '—';
+            color: var(--gold);
+            flex-shrink: 0;
+            margin-top: 0.05em;
+        }
+
+        .tour-ghost-num {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 7rem;
+            font-weight: 300;
+            color: rgba(201,169,110,0.05);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* ═══════════════ STAR WARS ═══════════════ */
+        .starwars {
+            position: relative;
+            padding: 9rem 3rem;
+            overflow: hidden;
+        }
+
+        .starwars-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('skellig-top.jpg');
+            background-size: cover;
+            background-position: center 40%;
+            transform: scale(1.05);
+            transition: transform 0.1s linear;
+            will-change: transform;
+        }
+
+        .starwars-bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(7,9,12,0.55) 0%,
+                rgba(7,9,12,0.35) 40%,
+                rgba(7,9,12,0.72) 85%,
+                rgba(7,9,12,1)    100%
+            );
+        }
+
+        .starfield {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .sw-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 60%, rgba(20,35,60,0.3) 0%, transparent 68%);
+            pointer-events: none;
+        }
+
+        .starwars-inner {
+            position: relative;
+            max-width: 760px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .sw-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.15;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .sw-attr {
+            font-size: 0.68rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(201,169,110,0.6);
+            margin-bottom: 2.5rem;
+        }
+
+        .sw-body {
+            font-size: 0.92rem;
+            line-height: 1.9;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ═══════════════ HISTORY ═══════════════ */
+        .history-section {
+            padding: 7rem 3rem;
+            max-width: 1240px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7rem;
+            align-items: start;
+        }
+
+        .history-body p {
+            font-size: 0.9rem;
+            line-height: 1.95;
+            color: var(--muted);
+            margin-bottom: 1.4rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5px;
+            background: rgba(201,169,110,0.08);
+            margin-top: 3rem;
+        }
+
+        .stat {
+            background: var(--dark);
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+        }
+
+        .stat-n {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-l {
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.4);
+        }
+
+        .unesco-card {
+            padding: 3rem;
+            border-left: 2px solid var(--gold);
+            background: var(--dark);
+            position: sticky;
+            top: 6rem;
+        }
+
+        .unesco-card blockquote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-style: italic;
+            line-height: 1.8;
+            color: rgba(240,237,232,0.82);
+            margin-bottom: 1.5rem;
+        }
+
+        .unesco-card cite {
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        /* ═══════════════ TESTIMONIALS ═══════════════ */
+        .testimonials-section {
+            background: var(--dark);
+            padding: 7rem 3rem;
+        }
+
+        .testimonials-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: rgba(201,169,110,0.06);
+        }
+
+        .t-card {
+            background: var(--black);
+            padding: 2.8rem 2.5rem;
+            position: relative;
+        }
+
+        .t-mark {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.5rem;
+            line-height: 1;
+            color: var(--gold);
+            opacity: 0.25;
+            position: absolute;
+            top: 1.2rem;
+            left: 2rem;
+        }
+
+        .t-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.08rem;
+            font-style: italic;
+            line-height: 1.78;
+            color: rgba(240,237,232,0.78);
+            margin-top: 2.5rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .t-author {
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* ═══════════════ KNOW BEFORE ═══════════════ */
+        .know-section {
+            padding: 7rem 3rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .know-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .know-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: rgba(201,169,110,0.06);
+        }
+
+        .know-card {
+            background: var(--slate);
+            padding: 2.5rem 2rem;
+        }
+
+        .know-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .know-card p {
+            font-size: 0.83rem;
+            line-height: 1.8;
+            color: var(--muted);
+        }
+
+        .know-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--gold);
+            opacity: 0.4;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        /* ═══════════════ BOOK CTA ═══════════════ */
+        .book-section {
+            position: relative;
+            padding: 9rem 3rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .book-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 100%, rgba(201,169,110,0.07) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .book-inner {
+            position: relative;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .book-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .book-sub {
+            font-size: 0.88rem;
+            line-height: 1.75;
+            color: var(--muted);
+            margin-bottom: 3rem;
+        }
+
+        .book-ctas {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .book-email {
+            font-size: 0.78rem;
+            color: rgba(240,237,232,0.35);
+        }
+
+        .book-email a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .book-email a:hover { color: var(--gold-lt); }
+
+        /* ═══════════════ FOOTER ═══════════════ */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.055);
+            padding: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .f-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.35);
+        }
+
+        .f-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .f-links a {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.3);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .f-links a:hover { color: var(--gold); }
+
+        .f-copy {
+            font-size: 0.7rem;
+            color: rgba(240,237,232,0.2);
+        }
+
+        /* ═══════════════ MOBILE ═══════════════ */
+        /* ═══════════════ CUSTOM CURSOR — PUFFIN BEAK ═══════════════ */
+        * { cursor: none !important; }
+
+        .cursor-dot {
+            position: fixed;
+            width: 28px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-6px, -24px) rotate(-20deg);
+            transform-origin: 6px 24px;
+            filter: drop-shadow(0 1px 4px rgba(0,0,0,0.6));
+            animation: puffinCursorBob 1.8s ease-in-out infinite;
+        }
+
+        .cursor-dot img { width: 100%; display: block; }
+
+        .cursor-dot.hovering {
+            transform: translate(-6px, -24px) rotate(-35deg) scale(1.2);
+            animation: none;
+        }
+
+        .cursor-ring { display: none; }
+
+        @keyframes puffinCursorBob {
+            0%,100% { transform: translate(-6px, -24px) rotate(-20deg); }
+            50%      { transform: translate(-6px, -27px) rotate(-22deg); }
+        }
+
+        /* ═══════════════ FILM GRAIN ═══════════════ */
+        .grain {
+            position: fixed;
+            inset: -50%;
+            width: 200%; height: 200%;
+            pointer-events: none;
+            z-index: 9990;
+            opacity: 0.028;
+            animation: grainShift 0.18s steps(1) infinite;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+        }
+
+        @keyframes grainShift {
+            0%  { transform: translate(0, 0); }
+            10% { transform: translate(-3%, -4%); }
+            20% { transform: translate(3%, 2%); }
+            30% { transform: translate(-2%, 5%); }
+            40% { transform: translate(4%, -3%); }
+            50% { transform: translate(-4%, 2%); }
+            60% { transform: translate(2%, 4%); }
+            70% { transform: translate(-3%, -2%); }
+            80% { transform: translate(3%, -4%); }
+            90% { transform: translate(-2%, 3%); }
+            100%{ transform: translate(2%, -3%); }
+        }
+
+        /* ═══════════════ MIST PARTICLES ═══════════════ */
+        #mist-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+        }
+
+        /* ═══════════════ WORD REVEAL ═══════════════ */
+        .word-reveal .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+            margin-right: 0.22em;
+        }
+
+        .word-reveal.triggered .word { opacity: 1; transform: none; }
+
+        /* ═══════════════ COUNTER ═══════════════ */
+        .stat-n { transition: color 0.3s; }
+
+        /* ═══════════════ PAGE LOADER ═══════════════ */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--black);
+            z-index: 9995;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .loader-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.9);
+            opacity: 0;
+        }
+
+        .loader-line {
+            width: 0px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+
+        /* ═══════════════ PUFFIN ═══════════════ */
+        #puffin-stage {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            pointer-events: none;
+            z-index: 150;
+            overflow: visible;
+        }
+
+        #puffin {
+            position: absolute;
+            bottom: 0;
+            left: 0;           /* GSAP owns x — no CSS left offset */
+            width: 110px;
+            opacity: 0;        /* hidden until JS sets it */
+            transform-origin: bottom center;
+            filter: drop-shadow(0 6px 20px rgba(0,0,0,0.5));
+            will-change: transform;
+        }
+
+        /* Speech bubble */
+        #puffin-bubble {
+            position: fixed;
+            bottom: 130px;
+            left: 0;
+            background: rgba(255,255,255,0.96);
+            color: #07090c;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            font-style: italic;
+            padding: 0.7rem 1.1rem;
+            border-radius: 12px 12px 12px 2px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+        }
+
+        #puffin-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 18px;
+            width: 0; height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(255,255,255,0.96);
+        }
+
+        @media (max-width: 900px) {
+            #puffin { width: 80px; }
+        }
+
+        /* ═══════════════ MOBILE ═══════════════ */
+        /* ═══════════════ GALLERY MARQUEE ═══════════════ */
+        .gallery-section {
+            padding: 7rem 0 5rem;
+            overflow: hidden;
+        }
+
+        .gallery-header {
+            text-align: center;
+            padding: 0 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .gallery-header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--muted);
+            margin-top: 1rem;
+        }
+
+        .gallery-marquee {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+        }
+
+        .marquee-row { overflow: hidden; }
+
+        .marquee-track {
+            display: flex;
+            gap: 10px;
+            width: max-content;
+        }
+
+        .marquee-track img {
+            height: 250px;
+            width: auto;
+            object-fit: cover;
+            display: block;
+            flex-shrink: 0;
+            filter: brightness(0.82) saturate(0.92) contrast(1.04);
+            transition: filter 0.5s ease, transform 0.5s ease;
+        }
+
+        .marquee-track img:hover {
+            filter: brightness(1) saturate(1.15) contrast(1);
+            transform: scale(1.03);
+            z-index: 2;
+            position: relative;
+        }
+
+        .marquee-left  .marquee-track { animation: marqueeLeft  45s linear infinite; }
+        .marquee-right .marquee-track { animation: marqueeRight 55s linear infinite; }
+
+        @keyframes marqueeLeft  { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
+        @keyframes marqueeRight { from { transform: translateX(-50%); } to { transform: translateX(0); }    }
+
+        .gallery-marquee:hover .marquee-track { animation-play-state: paused; }
+
+        /* ═══════════════ FLEET SECTION ═══════════════ */
+        .fleet-section {
+            padding: 7rem 3rem;
+            background: var(--dark);
+        }
+
+        .fleet-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .fleet-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .fleet-sub {
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--muted);
+            max-width: 540px;
+            margin: 1rem auto 4rem;
+            line-height: 1.7;
+        }
+
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: rgba(201,169,110,0.07);
+        }
+
+        .fleet-card {
+            background: var(--black);
+            padding: 2.6rem 2.2rem 2.2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+        }
+
+        .fleet-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .fleet-card:hover::before { opacity: 1; }
+
+        .fleet-card:hover { transform: translateY(-4px); }
+
+        .fleet-vessel-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            font-weight: 300;
+            color: rgba(201,169,110,0.055);
+            line-height: 1;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            pointer-events: none;
+        }
+
+        .fleet-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1.6rem;
+            opacity: 0.6;
+        }
+
+        .fleet-type {
+            font-size: 0.58rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(201,169,110,0.25);
+            display: inline-block;
+            padding: 0.25rem 0.7rem;
+            margin-bottom: 1rem;
+        }
+
+        .fleet-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .fleet-card p {
+            font-size: 0.82rem;
+            line-height: 1.78;
+            color: var(--muted);
+            margin-bottom: 1.4rem;
+        }
+
+        .fleet-specs {
+            list-style: none;
+            border-top: 1px solid var(--faint);
+        }
+
+        .fleet-specs li {
+            font-size: 0.76rem;
+            color: rgba(240,237,232,0.5);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--faint);
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .fleet-specs li::before {
+            content: '·';
+            color: var(--gold);
+        }
+
+        /* ═══════════════ WILDLIFE SECTION ═══════════════ */
+        .wildlife-section {
+            padding: 6rem 3rem 5rem;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wildlife-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 100%, rgba(201,169,110,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .wildlife-header {
+            text-align: center;
+            margin-bottom: 3.8rem;
+            position: relative;
+        }
+
+        .wildlife-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--muted);
+            margin-top: 0.9rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .wildlife-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2px;
+            background: rgba(201,169,110,0.06);
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .wildlife-card {
+            background: var(--black);
+            padding: 2.8rem 1.2rem 2.2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+            transition: background 0.4s;
+        }
+
+        .wildlife-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .wildlife-card:hover::after { opacity: 1; }
+        .wildlife-card:hover { background: var(--slate); }
+        .wildlife-card:hover .wildlife-name { color: var(--gold); }
+
+        .wildlife-svg-wrap {
+            height: 96px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            margin-bottom: 1.4rem;
+        }
+
+        .wildlife-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: var(--white);
+            display: block;
+            margin-bottom: 0.35rem;
+            transition: color 0.3s;
+        }
+
+        .wildlife-note {
+            font-size: 0.67rem;
+            color: rgba(220,235,245,0.4);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        /* Puffin */
+        .svg-puffin { animation: puffinWaddle 1.7s ease-in-out infinite; transform-origin: bottom center; }
+        @keyframes puffinWaddle {
+            0%,100% { transform: rotate(-5deg) translateY(0px); }
+            25%      { transform: rotate(5deg)  translateY(-4px); }
+            50%      { transform: rotate(-5deg) translateY(0px); }
+            75%      { transform: rotate(5deg)  translateY(-4px); }
+        }
+
+        /* Seal */
+        .svg-seal        { animation: sealBob 3.2s ease-in-out infinite; }
+        .svg-seal-head   { transform-origin: 70px 36px; animation: sealHead 6.5s ease-in-out infinite; }
+        @keyframes sealBob  { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-9px); } }
+        @keyframes sealHead { 0%,60%,100% { transform: rotate(0deg); } 72% { transform: rotate(-20deg); } 88% { transform: rotate(-15deg); } }
+
+        /* Dolphin */
+        .svg-dolphin { animation: dolphinLeap 2.6s ease-in-out infinite; transform-origin: 50% 85%; }
+        @keyframes dolphinLeap {
+            0%,100% { transform: translateY(0px)   rotate(0deg); }
+            30%      { transform: translateY(-20px) rotate(-14deg); }
+            58%      { transform: translateY(0px)   rotate(8deg); }
+            78%      { transform: translateY(-6px)  rotate(-3deg); }
+        }
+
+        /* Gannet */
+        .svg-gannet         { animation: gannetGlide 5.5s ease-in-out infinite; }
+        .svg-gannet-wing-l  { transform-origin: 54px 26px; animation: gannetWingL 2.4s ease-in-out infinite; }
+        .svg-gannet-wing-r  { transform-origin: 54px 26px; animation: gannetWingR 2.4s ease-in-out infinite; }
+        @keyframes gannetGlide  { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        @keyframes gannetWingL  { 0%,100% { transform: rotate(0deg); }   50% { transform: rotate(-16deg); } }
+        @keyframes gannetWingR  { 0%,100% { transform: rotate(0deg); }   50% { transform: rotate(16deg); }  }
+
+        /* Whale */
+        .svg-whale       { animation: whaleBreath 5.5s ease-in-out infinite; }
+        .svg-whale-tail  { transform-origin: 18px 34px; animation: whaleTail 5.5s ease-in-out infinite; }
+        .svg-whale-spout { animation: whaleSpout 5.5s ease-in-out infinite; }
+        @keyframes whaleBreath { 0%,100% { transform: translateY(0px);  } 50% { transform: translateY(-11px); } }
+        @keyframes whaleTail   { 0%,100% { transform: rotate(0deg);     } 30% { transform: rotate(24deg);     } 65% { transform: rotate(-10deg); } }
+        @keyframes whaleSpout  { 0%,40%,100% { opacity:0; transform:scaleY(0); } 52%,88% { opacity:0.75; transform:scaleY(1); } }
+
+        /* ═══════════════ TRUST / AWARDS SECTION ═══════════════ */
+        .trust-section {
+            padding: 7rem 3rem;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0.3;
+        }
+
+        .trust-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .trust-header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .trust-lead {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-style: italic;
+            color: var(--muted);
+            max-width: 680px;
+            margin: 1rem auto 4rem;
+            line-height: 1.75;
+        }
+
+        .trust-lead strong {
+            color: var(--white);
+            font-style: normal;
+            font-weight: 400;
+        }
+
+        .trust-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: rgba(201,169,110,0.06);
+            margin-bottom: 5rem;
+        }
+
+        .trust-card {
+            background: var(--black);
+            padding: 3rem 2.2rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+            transform-origin: left;
+        }
+
+        .trust-card:hover::before { transform: scaleX(1); }
+
+        .trust-card-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: rgba(201,169,110,0.07);
+            line-height: 1;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            pointer-events: none;
+        }
+
+        .trust-icon {
+            width: 44px;
+            height: 44px;
+            margin-bottom: 1.6rem;
+        }
+
+        .trust-badge {
+            font-size: 0.58rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(201,169,110,0.3);
+            display: inline-block;
+            padding: 0.28rem 0.7rem;
+            margin-bottom: 1rem;
+        }
+
+        .trust-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.25;
+            margin-bottom: 1rem;
+        }
+
+        .trust-card p {
+            font-size: 0.82rem;
+            line-height: 1.82;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .trust-means {
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 0.06em;
+            padding-top: 1rem;
+            border-top: 1px solid var(--faint);
+        }
+
+        /* Logo strip */
+        .trust-logos-label {
+            text-align: center;
+            font-size: 0.62rem;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.7;
+            margin-bottom: 2.5rem;
+        }
+
+        .trust-logo-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .trust-logo-item {
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.1rem 1rem;
+            transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow 0.3s ease,
+                        background 0.3s;
+        }
+
+        .trust-logo-item:hover {
+            transform: translateY(-3px);
+            background: #ffffff;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+        }
+
+        .trust-logo-item img {
+            max-height: 52px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            nav { padding: 1.2rem 1.5rem; }
+            .nav-links { display: none; }
+
+            .tours-section,
+            .history-section,
+            .know-section { padding: 4rem 1.5rem; }
+
+            .tours-grid,
+            .history-section,
+            .testimonials-grid,
+            .know-grid,
+            .fleet-grid { grid-template-columns: 1fr; }
+
+            .hero-ctas { flex-direction: column; align-items: center; }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .f-links { justify-content: center; }
+
+            .book-ctas { flex-direction: column; align-items: center; }
+
+            .intro { padding: 4rem 1.5rem; }
+
+            .testimonials-section { padding: 4rem 1.5rem; }
+
+            .starwars { padding: 6rem 1.5rem; }
+
+            .book-section { padding: 6rem 1.5rem; }
+
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+
+            .fleet-section  { padding: 4rem 1.5rem; }
+            .wildlife-section { padding: 4rem 1.5rem; }
+            .wildlife-grid  { grid-template-columns: repeat(3, 1fr); }
+            .trust-section  { padding: 4rem 1.5rem; }
+            .trust-cards    { grid-template-columns: 1fr 1fr; }
+            .trust-logo-grid { grid-template-columns: repeat(4, 1fr); }
+
+            .marquee-track img { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-logo">Skellig Michael Cruises</div>
+    <div class="loader-line" id="loaderLine"></div>
+</div>
+
+<!-- CURSOR — puffin beak -->
+<div class="cursor-dot" id="cursorDot">
+    <img src="puffin.png" alt="">
+</div>
+
+<!-- FILM GRAIN -->
+<div class="grain"></div>
+
+<!-- ═══════ NAV ═══════ -->
+<nav id="mainNav">
+    <a href="#" class="nav-brand">Skellig Michael Cruises</a>
+    <ul class="nav-links">
+        <li><a href="#tours">Tours</a></li>
+        <li><a href="#fleet">Fleet</a></li>
+        <li><a href="#island">The Island</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="tel:0876178114" class="nav-cta">Call Paul · 087 617 8114</a>
+</nav>
+
+<!-- ═══════ HERO — scroll zoom approach ═══════ -->
+<div class="hero-track" id="heroTrack">
+    <div class="hero-sticky">
+        <video id="heroVideo"
+            muted playsinline preload="auto"
+            src="skellig-scrub.mp4">
+        </video>
+
+        <!-- Buffer overlay — shown until video is ready to scrub -->
+        <div id="bufferOverlay">
+            <div class="buffer-text">Loading your journey</div>
+            <div class="buffer-bar"><div class="buffer-fill" id="bufferFill"></div></div>
+        </div>
+        <audio id="heroAudio" src="skellig-audio.m4a" preload="auto" loop></audio>
+        <canvas id="mist-canvas"></canvas>
+        <div class="hero-gradient"></div>
+        <div class="hero-content" id="heroContent">
+            <span class="hero-eyebrow">Kerry, Ireland &nbsp;·&nbsp; UNESCO World Heritage Site &nbsp;·&nbsp; Est. 6th Century AD</span>
+            <h1 class="hero-title">Skellig<br><em>Michael</em></h1>
+            <p class="hero-sub">618 steps. 1,500 years of silence.<br>One unforgettable crossing.</p>
+            <div class="hero-ctas">
+                <a href="https://www-1557q.bookeo.com/bookeo/b_skelligmichaelcruises_start.html?ctlsrc2=zaAhcC0M4JEyr0TK1uBj53X%2Bc7r47vR8YdGbX7HXvYY%3D&src=02r"
+                   class="btn btn-gold" target="_blank" rel="noopener">Book Your 2026 Tour</a>
+                <a href="#tours" class="btn btn-ghost">Explore Tours</a>
+            </div>
+        </div>
+        <div class="scroll-hint" id="scrollHint">
+            <span>Scroll toward the island</span>
+            <div class="scroll-hint-line"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ INTRO ═══════ -->
+<div class="intro reveal">
+    <p>Rising from the wild Atlantic like an ancient pyramid, Skellig Michael has drawn pilgrims, monks, and adventurers for <span class="accent">fifteen hundred years</span>. J.J. Abrams brought Luke Skywalker here. Now it calls you.</p>
+</div>
+
+<div class="divider-line"></div>
+
+<!-- ═══════ TOURS ═══════ -->
+<section class="tours-section" id="tours">
+    <div class="tours-header reveal">
+        <span class="label">2026 Season · Booking Open Now</span>
+        <h2 class="heading">Choose Your Journey</h2>
+    </div>
+
+    <div class="tours-grid">
+        <!-- Landing Tour -->
+        <div class="tour-card reveal reveal-d1">
+            <span class="tour-tag">The Ultimate Experience</span>
+            <h3>Skellig Michael<br>Landing Tour</h3>
+            <p class="tour-desc">Step ashore on one of the world's most extraordinary islands. Climb the 618 stone steps — carved by monks in the 6th century — to a monastery clinging to the edge of the Atlantic. No guardrails. No handholds. Just you and fifteen centuries of silence.</p>
+            <ul class="tour-facts">
+                <li>Departs Portmagee Marina — 8:00am to 10:30am daily</li>
+                <li>Approx. 1 hour crossing each way</li>
+                <li>2.5 hours to explore the island</li>
+                <li>OPW certified tour guide on the island</li>
+                <li>Landing begins 9th May 2026</li>
+                <li>Minimum age 12 · Sturdy footwear required</li>
+                <li>Dogs not permitted on Landing Tour</li>
+                <li>Full refund or reschedule if weather cancels</li>
+            </ul>
+            <a href="https://www-1557q.bookeo.com/bookeo/b_skelligmichaelcruises_start.html?ctlsrc2=zaAhcC0M4JEyr0TK1uBj53X%2Bc7r47vR8YdGbX7HXvYY%3D&src=02r"
+               class="btn btn-gold" target="_blank" rel="noopener">Book Landing Tour</a>
+            <div class="tour-ghost-num">01</div>
+        </div>
+
+        <!-- Eco Tour -->
+        <div class="tour-card reveal reveal-d2">
+            <span class="tour-tag">Perfect for All Ages</span>
+            <h3>Skellig Islands<br>Eco Cruise</h3>
+            <p class="tour-desc">Circumnavigate both Skellig Michael and Little Skellig — home to the second largest gannet colony in the world. Get close enough to see the ancient steps, the lighthouse, the monastery, and a sea alive with puffins, seals, and dolphins. No steps required.</p>
+            <ul class="tour-facts">
+                <li>Departs 10:00 · 12:30 · 3:00 · 5:15pm daily</li>
+                <li>Approx. 2.5 hours on the water</li>
+                <li>All ages welcome · Dogs allowed</li>
+                <li>Wheelchair accessible boarding at the stern</li>
+                <li>Covered shelter, toilet, rain gear on board</li>
+                <li>Seals, gannets, puffins — dolphins most mornings</li>
+                <li>Running St. Patrick's Day through end of October</li>
+                <li>Half the price of the Landing Tour</li>
+            </ul>
+            <a href="https://www-1557q.bookeo.com/bookeo/b_skelligmichaelcruises_start.html?ctlsrc2=zaAhcC0M4JEyr0TK1uBj53X%2Bc7r47vR8YdGbX7HXvYY%3D&src=02r"
+               class="btn btn-gold" target="_blank" rel="noopener">Book Eco Cruise</a>
+            <div class="tour-ghost-num">02</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ WILDLIFE ═══════ -->
+<section class="wildlife-section">
+    <div class="wildlife-header reveal">
+        <span class="label">Wild Atlantic Wildlife · Skellig Islands</span>
+        <h2 class="heading">They Were Here Before<br>The Monks</h2>
+        <p class="wildlife-sub">The waters around Skellig Michael are among the richest wildlife corridors in the North Atlantic. Some mornings, the dolphins meet the boat before Portmagee is out of sight.</p>
+    </div>
+    <div class="wildlife-grid">
+
+        <!-- PUFFIN -->
+        <div class="wildlife-card reveal reveal-d1">
+            <div class="wildlife-svg-wrap">
+                <svg class="svg-puffin" viewBox="0 0 60 82" width="54" height="74" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="30" cy="54" rx="15" ry="20" fill="#141418"/>
+                    <ellipse cx="30" cy="58" rx="9" ry="13" fill="#e4e8f0"/>
+                    <circle cx="30" cy="28" r="13" fill="#141418"/>
+                    <ellipse cx="30" cy="32" rx="8.5" ry="7.5" fill="#d8dce8"/>
+                    <circle cx="34" cy="26" r="3.5" fill="#b84808"/>
+                    <circle cx="34" cy="26" r="2.2" fill="#080810"/>
+                    <circle cx="34.9" cy="25.2" r="0.7" fill="white"/>
+                    <path d="M37 27.5 L39 27 L39 32 L37 31.5 Z" fill="#c0961a"/>
+                    <path d="M39 27 L43 27.5 L43 32.5 L39 32 Z" fill="#3a68a0"/>
+                    <path d="M43 27.5 L52 29.5 L48 32 L43 32.5 Z" fill="#d04408"/>
+                    <path d="M37 31.5 L48 32 L46 35.5 L37 34.5 Z" fill="#b83008"/>
+                    <path d="M16 52 Q10 46 14 39 Q20 44 21 52 Z" fill="#1c1c20"/>
+                    <path d="M44 52 Q50 46 46 39 Q40 44 39 52 Z" fill="#1c1c20"/>
+                    <rect x="25" y="70" width="2.5" height="8" rx="1" fill="#d07818"/>
+                    <rect x="32" y="70" width="2.5" height="8" rx="1" fill="#d07818"/>
+                    <path d="M25 77 L20 80 M25 77 L25 82 M25 77 L30 80" stroke="#d07818" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <path d="M34 77 L29 80 M34 77 L34 82 M34 77 L39 80" stroke="#d07818" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+            </div>
+            <span class="wildlife-name">Atlantic Puffin</span>
+            <span class="wildlife-note">Nesting May – August</span>
+        </div>
+
+        <!-- SEAL -->
+        <div class="wildlife-card reveal reveal-d2">
+            <div class="wildlife-svg-wrap">
+                <svg class="svg-seal" viewBox="0 0 88 62" width="84" height="59" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 48 Q12 52 8 50 Q14 42 22 40 Z" fill="#6e7e8e"/>
+                    <path d="M22 50 Q12 58 10 60 Q16 52 24 46 Z" fill="#6e7e8e"/>
+                    <ellipse cx="50" cy="46" rx="30" ry="14" fill="#8090a0"/>
+                    <ellipse cx="50" cy="47" rx="20" ry="8" fill="#9aaab8" opacity="0.55"/>
+                    <path d="M30 52 Q20 56 16 62 Q22 52 30 48 Z" fill="#6e7e8e"/>
+                    <g class="svg-seal-head">
+                        <ellipse cx="70" cy="36" rx="16" ry="15" fill="#8090a0"/>
+                        <ellipse cx="70" cy="40" rx="11" ry="9" fill="#98a8b8" opacity="0.65"/>
+                        <circle cx="64" cy="31" r="4.5" fill="#080c14"/>
+                        <circle cx="62.5" cy="29.8" r="1.5" fill="white" opacity="0.75"/>
+                        <ellipse cx="71" cy="43" rx="5" ry="3.5" fill="#607080"/>
+                        <path d="M68.5 42.5 Q71 44.2 73.5 42.5" stroke="#486070" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                        <line x1="75" y1="41" x2="88" y2="38" stroke="#b8ccd8" stroke-width="1.2" opacity="0.7"/>
+                        <line x1="75" y1="43" x2="88" y2="43" stroke="#b8ccd8" stroke-width="1.2" opacity="0.7"/>
+                        <line x1="75" y1="45" x2="88" y2="48" stroke="#b8ccd8" stroke-width="1.2" opacity="0.7"/>
+                        <line x1="66" y1="41" x2="54" y2="38" stroke="#b8ccd8" stroke-width="1.2" opacity="0.6"/>
+                        <line x1="66" y1="43" x2="54" y2="43" stroke="#b8ccd8" stroke-width="1.2" opacity="0.6"/>
+                        <path d="M64 48 Q71 51 77 48" stroke="#607080" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    </g>
+                </svg>
+            </div>
+            <span class="wildlife-name">Grey Seal</span>
+            <span class="wildlife-note">Year-round residents</span>
+        </div>
+
+        <!-- DOLPHIN -->
+        <div class="wildlife-card reveal reveal-d3">
+            <div class="wildlife-svg-wrap">
+                <svg class="svg-dolphin" viewBox="0 0 95 58" width="88" height="54" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 46 Q16 22 45 18 Q74 14 90 30 Q86 40 78 42 Q48 48 18 52 Q10 52 6 46 Z" fill="#486878"/>
+                    <path d="M18 44 Q48 52 78 40 Q56 58 22 56 Z" fill="#7098a8" opacity="0.5"/>
+                    <path d="M20 39 Q46 37 70 35 Q55 44 25 48 Z" fill="#2a4a5a" opacity="0.2"/>
+                    <path d="M48 18 Q56 6 62 16 Q58 18 48 18 Z" fill="#38586a"/>
+                    <path d="M32 36 Q22 46 18 54 Q26 44 36 40 Z" fill="#38586a"/>
+                    <path d="M86 30 Q96 20 94 27 Q91 31 86 30 Z" fill="#38586a"/>
+                    <path d="M86 33 Q96 42 92 37 Q89 34 86 33 Z" fill="#38586a"/>
+                    <circle cx="22" cy="35" r="3.5" fill="#08101c"/>
+                    <circle cx="20.8" cy="33.8" r="1.2" fill="white" opacity="0.75"/>
+                    <path d="M14 39 Q22 44 30 39" stroke="#38586a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <span class="wildlife-name">Common Dolphin</span>
+            <span class="wildlife-note">Most mornings</span>
+        </div>
+
+        <!-- GANNET -->
+        <div class="wildlife-card reveal reveal-d1">
+            <div class="wildlife-svg-wrap">
+                <svg class="svg-gannet" viewBox="0 0 108 55" width="100" height="51" xmlns="http://www.w3.org/2000/svg">
+                    <g class="svg-gannet-wing-l">
+                        <path d="M54 26 Q36 15 6 22 Q16 30 40 30 Q50 28 54 26 Z" fill="#f0f0f4"/>
+                        <path d="M6 22 Q0 19 2 25 Q10 28 40 30 Z" fill="#18181e"/>
+                    </g>
+                    <g class="svg-gannet-wing-r">
+                        <path d="M54 26 Q72 15 102 22 Q92 30 68 30 Q58 28 54 26 Z" fill="#f0f0f4"/>
+                        <path d="M102 22 Q108 19 106 25 Q98 28 68 30 Z" fill="#18181e"/>
+                    </g>
+                    <ellipse cx="54" cy="34" rx="15" ry="9" fill="#eeeff2"/>
+                    <ellipse cx="54" cy="22" rx="9" ry="10" fill="#ddd8c8"/>
+                    <ellipse cx="54" cy="20" rx="7" ry="7" fill="#e8e4d8" opacity="0.45"/>
+                    <circle cx="58" cy="19" r="4.2" fill="none" stroke="#5090b8" stroke-width="1.5"/>
+                    <circle cx="58" cy="19" r="2.8" fill="#080e18"/>
+                    <circle cx="56.8" cy="17.8" r="0.9" fill="white" opacity="0.8"/>
+                    <path d="M57 24 L72 30 L70 32.5 L55 27.5 Z" fill="#7898b0"/>
+                    <line x1="59" y1="25" x2="72" y2="30" stroke="#90b0c8" stroke-width="0.8"/>
+                    <path d="M64 38 Q70 44 67 48 Q60 43 58 38 Z" fill="#e8e8ec"/>
+                </svg>
+            </div>
+            <span class="wildlife-name">Northern Gannet</span>
+            <span class="wildlife-note">60,000+ on Little Skellig</span>
+        </div>
+
+        <!-- WHALE -->
+        <div class="wildlife-card reveal reveal-d2">
+            <div class="wildlife-svg-wrap">
+                <svg class="svg-whale" viewBox="0 0 108 65" width="100" height="60" xmlns="http://www.w3.org/2000/svg">
+                    <g class="svg-whale-spout">
+                        <line x1="82" y1="20" x2="79" y2="9"  stroke="#b0ccdf" stroke-width="2"   stroke-linecap="round"/>
+                        <line x1="82" y1="20" x2="82" y2="7"  stroke="#b0ccdf" stroke-width="2"   stroke-linecap="round"/>
+                        <line x1="82" y1="20" x2="85" y2="10" stroke="#b0ccdf" stroke-width="1.5" stroke-linecap="round"/>
+                    </g>
+                    <g class="svg-whale-tail">
+                        <path d="M18 35 Q8 20 4 26 Q8 34 18 36 Z" fill="#243448"/>
+                        <path d="M18 37 Q8 52 4 46 Q8 38 18 36 Z" fill="#243448"/>
+                        <path d="M14 30 Q20 36 14 42 Q12 36 14 30 Z" fill="#18283c"/>
+                    </g>
+                    <path d="M18 34 Q40 18 76 22 Q92 24 102 34 Q94 46 76 48 Q40 52 18 38 Z" fill="#243450"/>
+                    <path d="M32 40 Q62 50 92 42 Q76 58 46 56 Q30 54 32 40 Z" fill="#486880" opacity="0.45"/>
+                    <path d="M46 42 Q36 54 30 62 Q40 54 50 48 Z" fill="#18283a"/>
+                    <path d="M66 22 Q70 16 74 22 Q70 23 66 22 Z" fill="#1c2c42"/>
+                    <ellipse cx="82" cy="22" rx="3" ry="2" fill="#182840"/>
+                    <circle cx="90" cy="32" r="3.5" fill="#040810"/>
+                    <circle cx="88.8" cy="30.8" r="1.2" fill="white" opacity="0.6"/>
+                </svg>
+            </div>
+            <span class="wildlife-name">Minke Whale</span>
+            <span class="wildlife-note">Summer sightings</span>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════ FLEET ═══════ -->
+<section class="fleet-section" id="fleet">
+    <div class="fleet-inner">
+        <div class="fleet-header reveal">
+            <span class="label">Our Fleet · Portmagee Marina, Kerry</span>
+            <h2 class="heading">Six Vessels.<br>One Destination.</h2>
+        </div>
+        <p class="fleet-sub reveal">Every vessel in Paul's fleet is fully licensed, BIM-certified, and equipped for Atlantic crossings. Safety briefings before every departure. No exceptions.</p>
+        <div class="fleet-grid">
+            <div class="fleet-card reveal reveal-d1">
+                <div class="fleet-vessel-num">01</div>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <span class="fleet-type">Landing Tour</span>
+                <h3>Marber<br>Therese II</h3>
+                <p>Paul's flagship vessel — the primary boat for Skellig Michael Landing Tours. Purpose-built for the Atlantic crossing with covered shelter and full safety equipment.</p>
+                <ul class="fleet-specs">
+                    <li>Licensed for 12 passengers</li>
+                    <li>Covered shelter · Marine toilet</li>
+                    <li>Departs Portmagee Marina</li>
+                </ul>
+            </div>
+            <div class="fleet-card reveal reveal-d2">
+                <div class="fleet-vessel-num">02</div>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <span class="fleet-type">Eco Cruise</span>
+                <h3>Skellig<br>Star</h3>
+                <p>The flagship Eco Cruise vessel. Spacious deck with panoramic views — ideal for wildlife spotting, photography, and families with young children.</p>
+                <ul class="fleet-specs">
+                    <li>All ages welcome · Dogs allowed</li>
+                    <li>Wheelchair accessible boarding</li>
+                    <li>Open-deck + covered shelter</li>
+                </ul>
+            </div>
+            <div class="fleet-card reveal reveal-d3">
+                <div class="fleet-vessel-num">03</div>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <span class="fleet-type">Eco Cruise</span>
+                <h3>Skellig<br>Dawn</h3>
+                <p>The early riser. Skellig Dawn departs for the 10am cruise, catching the morning light as it falls on the rock and catching dolphins feeding in calm Atlantic waters.</p>
+                <ul class="fleet-specs">
+                    <li>Best for dolphin sightings</li>
+                    <li>Morning golden-hour departures</li>
+                    <li>Calm water windows</li>
+                </ul>
+            </div>
+            <div class="fleet-card reveal reveal-d1">
+                <div class="fleet-vessel-num">04</div>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <span class="fleet-type">Private Charter</span>
+                <h3>Jessica<br>Kate</h3>
+                <p>Available for private charters, photography expeditions, and small groups seeking an exclusive crossing. Contact Paul directly to discuss your requirements.</p>
+                <ul class="fleet-specs">
+                    <li>Private groups &amp; charters</li>
+                    <li>Photography expeditions</li>
+                    <li>Flexible departure times</li>
+                </ul>
+            </div>
+            <div class="fleet-card reveal reveal-d2">
+                <div class="fleet-vessel-num">05</div>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <span class="fleet-type">Eco Cruise</span>
+                <h3>Skellig<br>Flyer</h3>
+                <p>The afternoon and evening cruise vessel — catching Skellig Michael in the last gold of the day. Runs the 3pm and 5:15pm departures in the height of summer.</p>
+                <ul class="fleet-specs">
+                    <li>Afternoon &amp; evening departures</li>
+                    <li>Golden-hour photography</li>
+                    <li>Summer puffin peak season</li>
+                </ul>
+            </div>
+            <div class="fleet-card reveal reveal-d3">
+                <div class="fleet-vessel-num">06</div>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <span class="fleet-type">Traditional</span>
+                <h3>Mám an<br>Oraigh</h3>
+                <p>Named in Irish, this vessel carries tradition onto the water. A nod to the monks who first made this crossing — going to the edge of the world by faith alone.</p>
+                <ul class="fleet-specs">
+                    <li>Traditional open-deck vessel</li>
+                    <li>Closest to the original crossing</li>
+                    <li>St. Patrick's Day — October</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ STAR WARS ═══════ -->
+<section class="starwars" id="starwars">
+    <div class="starwars-bg" id="swBg"></div>
+    <div class="starwars-bg-overlay"></div>
+    <div class="starfield" id="starfield"></div>
+    <div class="sw-glow"></div>
+    <div class="starwars-inner reveal">
+        <span class="label">Star Wars: The Force Awakens · Filmed 2015</span>
+        <p class="sw-quote">"Luke Skywalker<br>stood here."</p>
+        <p class="sw-attr">J.J. Abrams · The Force Awakens · 2015</p>
+        <p class="sw-body">Abrams searched the world for a location worthy of ending his film. He found it on a remote pyramid of rock off the coast of Kerry — the same rock that called monks to the edge of the known world in 600 AD. This is not a film set. It is a real place. It has always been real. Come and stand where Luke stood.</p>
+        <a href="https://www-1557q.bookeo.com/bookeo/b_skelligmichaelcruises_start.html?ctlsrc2=zaAhcC0M4JEyr0TK1uBj53X%2Bc7r47vR8YdGbX7HXvYY%3D&src=02r"
+           class="btn btn-ghost" target="_blank" rel="noopener">Book Now</a>
+    </div>
+</section>
+
+<!-- ═══════ HISTORY ═══════ -->
+<section class="history-section" id="island">
+    <div class="history-body reveal">
+        <span class="label">Since The 6th Century AD</span>
+        <h2 class="heading">The Most Sacred Rock<br>in the Atlantic</h2>
+        <div class="rule"></div>
+        <p>Irish monks settled on Skellig Michael around 600 AD, carving steps into sheer cliff faces and building beehive huts of dry stone that have stood — without mortar — for over 1,400 years. They came to the edge of the known world to be closer to God.</p>
+        <p>In 1996, UNESCO declared it a World Heritage Site. It is the most westerly sacred site in Europe, and sits on the ancient St. Michael's Axis — an alignment of sacred sites running from Skellig through France, Italy, Greece, and on to Palestine, known since long before Christianity.</p>
+        <p>More recently, a galaxy far, far away found its ending here. But the island doesn't care. It has been here before all stories. It will be here after.</p>
+        <div class="stats-grid">
+            <div class="stat">
+                <span class="stat-n">618</span>
+                <span class="stat-l">Steps to the Monastery</span>
+            </div>
+            <div class="stat">
+                <span class="stat-n">1,400</span>
+                <span class="stat-l">Years of History</span>
+            </div>
+            <div class="stat">
+                <span class="stat-n">1996</span>
+                <span class="stat-l">UNESCO Listed</span>
+            </div>
+            <div class="stat">
+                <span class="stat-n">714ft</span>
+                <span class="stat-l">Above the Atlantic</span>
+            </div>
+        </div>
+    </div>
+    <div class="unesco-card reveal reveal-d2">
+        <blockquote>"An exceptional, and in many respects unique example of an early religious settlement deliberately sited on a pyramidal rock in the ocean, preserved because of a remarkable environment. Skellig Michael illustrates, as no other site can, the extremes of a Christian monasticism characterizing much of North Africa, the Near East and Europe."</blockquote>
+        <cite>UNESCO World Heritage Committee, 1996</cite>
+    </div>
+</section>
+
+<!-- ═══════ TESTIMONIALS ═══════ -->
+<section class="testimonials-section">
+    <div class="testimonials-inner">
+        <div class="testimonials-header reveal">
+            <span class="label">Traveller Reviews · TripAdvisor</span>
+            <h2 class="heading">What People Say</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="t-card reveal reveal-d1">
+                <div class="t-mark">"</div>
+                <p class="t-text">After experiencing the 660+ step climb to the top of this mountain, you can truly understand why Abrams selected Skellig Michael for the concluding scenes of Star Wars. Pictures and words cannot adequately describe the sheer magnitude or beauty of this special place.</p>
+                <div class="t-author">Pennsylvania, USA · TripAdvisor</div>
+            </div>
+            <div class="t-card reveal reveal-d2">
+                <div class="t-mark">"</div>
+                <p class="t-text">Seeing a minke whale and dolphins on the way out — magical. The skipper was so interesting. An absolute must. Our wee terrier was even invited along on the Eco Cruise.</p>
+                <div class="t-author">Gwyneth M. · Glasgow, United Kingdom</div>
+            </div>
+            <div class="t-card reveal reveal-d3">
+                <div class="t-mark">"</div>
+                <p class="t-text">Skellig Michael is one of those unique places that if you close your eyes after you visit it, you will again be transported back there. Do not miss it.</p>
+                <div class="t-author">Jenis C. · Italy · TripAdvisor</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ PHOTO GALLERY ═══════ -->
+<section class="gallery-section" id="gallery">
+    <div class="gallery-header reveal">
+        <span class="label">Photography · Kerry, Ireland</span>
+        <h2 class="heading">The Island in<br>Photographs</h2>
+        <p>Real images from Skellig Michael and the crossing from Portmagee Marina</p>
+    </div>
+    <div class="gallery-marquee">
+        <!-- Row 1 — scrolls left -->
+        <div class="marquee-row marquee-left">
+            <div class="marquee-track">
+                <img src="gallery/fbcover.jpg" alt="Skellig Michael aerial view">
+                <img src="gallery/visitors1.jpg" alt="Visitors on Skellig Michael">
+                <img src="gallery/aerial.jpg" alt="Aerial view of Skellig Michael">
+                <img src="gallery/closeup.jpg" alt="Close up of Skellig rock face">
+                <img src="gallery/skellig160.jpg" alt="Skellig Michael monastery">
+                <img src="gallery/slider4.jpg" alt="Skellig Michael from the sea">
+                <img src="gallery/visitors2.jpg" alt="Climbing the 618 steps">
+                <img src="gallery/tripadvisor.jpg" alt="Wild Atlantic Way Skellig">
+                <img src="gallery/visitors3.jpg" alt="Skellig Michael landing tour">
+                <img src="skellig-top.jpg" alt="Inside the beehive huts looking out">
+                <!-- Duplicate for seamless loop -->
+                <img src="gallery/fbcover.jpg" alt="">
+                <img src="gallery/visitors1.jpg" alt="">
+                <img src="gallery/aerial.jpg" alt="">
+                <img src="gallery/closeup.jpg" alt="">
+                <img src="gallery/skellig160.jpg" alt="">
+                <img src="gallery/slider4.jpg" alt="">
+                <img src="gallery/visitors2.jpg" alt="">
+                <img src="gallery/tripadvisor.jpg" alt="">
+                <img src="gallery/visitors3.jpg" alt="">
+            </div>
+        </div>
+        <!-- Row 2 — scrolls right -->
+        <div class="marquee-row marquee-right">
+            <div class="marquee-track">
+                <img src="gallery/bookingoffice.jpg" alt="Portmagee Booking Office">
+                <img src="gallery/image3.jpg" alt="Skellig Michael vista">
+                <img src="gallery/puffin-real.jpg" alt="Atlantic puffin on Skellig Michael">
+                <img src="gallery/visitors3.jpg" alt="Skellig landing tour">
+                <img src="gallery/aerial.jpg" alt="Aerial Skellig Michael">
+                <img src="gallery/fbcover.jpg" alt="Skellig from above">
+                <img src="gallery/closeup.jpg" alt="Rock face of Skellig">
+                <img src="gallery/skellig160.jpg" alt="Monastery at 714ft">
+                <img src="gallery/visitors1.jpg" alt="Tour visitors climbing">
+                <!-- Duplicate for seamless loop -->
+                <img src="gallery/bookingoffice.jpg" alt="">
+                <img src="gallery/image3.jpg" alt="">
+                <img src="gallery/puffin-real.jpg" alt="">
+                <img src="gallery/visitors3.jpg" alt="">
+                <img src="gallery/aerial.jpg" alt="">
+                <img src="gallery/fbcover.jpg" alt="">
+                <img src="gallery/closeup.jpg" alt="">
+                <img src="gallery/skellig160.jpg" alt="">
+                <img src="gallery/visitors1.jpg" alt="">
+                <img src="skellig-top.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ KNOW BEFORE YOU GO ═══════ -->
+<section class="know-section" id="safety">
+    <div class="know-header reveal">
+        <span class="label">Before You Go</span>
+        <h2 class="heading">What You Need to Know</h2>
+    </div>
+    <div class="know-grid">
+        <div class="know-card reveal reveal-d1">
+            <span class="know-number">01</span>
+            <h4>The Crossing</h4>
+            <p>The Atlantic is not decorative. Seas can be rough and weather changes fast. Wear windproof, waterproof layers. Bring food and water, carried in a backpack — your hands need to be free. Budget up to 6 hours for the full experience.</p>
+        </div>
+        <div class="know-card reveal reveal-d2">
+            <span class="know-number">02</span>
+            <h4>The Climb</h4>
+            <p>618 steps. Steep. Uneven. Some with no edge protection. Sturdy walking shoes are not optional — they are required. Take your time. There is no race on Skellig Michael. Children under 12 may not join the Landing Tour.</p>
+        </div>
+        <div class="know-card reveal reveal-d3">
+            <span class="know-number">03</span>
+            <h4>The Island</h4>
+            <p>This is a living wilderness site. Accidents have occurred. An OPW guide meets you at the lighthouse road — follow their instructions without exception. Stay on the path. The walls are 1,400 years old and held together by nothing but skill and time.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ BOOK CTA ═══════ -->
+<section class="book-section" id="book">
+    <div class="book-glow"></div>
+    <div class="book-inner reveal">
+        <span class="label">2026 Season · Tours Departing Daily</span>
+        <h2 class="book-title">Ready to Make<br>the Crossing?</h2>
+        <p class="book-sub">Departing from Portmagee Marina, Kerry. Weather permitting — full refund or reschedule if tours are cancelled due to conditions. Secure online booking or call Paul direct.</p>
+        <div class="book-ctas">
+            <a href="https://www-1557q.bookeo.com/bookeo/b_skelligmichaelcruises_start.html?ctlsrc2=zaAhcC0M4JEyr0TK1uBj53X%2Bc7r47vR8YdGbX7HXvYY%3D&src=02r"
+               class="btn btn-gold" target="_blank" rel="noopener">Book Online Now</a>
+            <a href="tel:0876178114" class="btn btn-ghost">Call Paul · 087 617 8114</a>
+        </div>
+        <p class="book-email">Or email <a href="mailto:skelligmichaelcruises@gmail.com">skelligmichaelcruises@gmail.com</a></p>
+    </div>
+</section>
+
+<!-- ═══════ TRUST & ACCREDITATIONS ═══════ -->
+<section class="trust-section" id="trust">
+    <div class="trust-inner">
+        <div class="trust-header reveal">
+            <span class="label">Certified · Licenced · Trusted</span>
+            <h2 class="heading">Every Licence<br>That Matters</h2>
+        </div>
+        <p class="trust-lead reveal">Of the hundreds of boats operating along the Kerry coast, <strong>only 15 hold an OPW licence to land passengers on Skellig Michael.</strong> Paul Devane holds one. These are not marketing badges — they are the things that keep you safe and guarantee the experience is real.</p>
+
+        <div class="trust-cards">
+            <div class="trust-card reveal reveal-d1">
+                <div class="trust-card-num">01</div>
+                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--gold)" stroke-width="1.4">
+                    <circle cx="22" cy="22" r="18" stroke-opacity="0.3"/>
+                    <path d="M22 8 L25 17 L35 17 L27 23 L30 33 L22 27 L14 33 L17 23 L9 17 L19 17 Z"/>
+                </svg>
+                <span class="trust-badge">OPW Licensed</span>
+                <h3>One of 15<br>Licensed Operators</h3>
+                <p>The Office of Public Works strictly limits landing access to Skellig Michael. Paul Devane holds one of Ireland's most coveted maritime licences. Without it, no boat can legally land passengers on the island.</p>
+                <div class="trust-means">For you — guaranteed legal, safe, authentic access to the island.</div>
+            </div>
+            <div class="trust-card reveal reveal-d2">
+                <div class="trust-card-num">02</div>
+                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--gold)" stroke-width="1.4">
+                    <path d="M8 22 Q8 8 22 5 Q36 8 36 22 Q36 34 22 42 Q8 34 8 22 Z" stroke-opacity="0.3"/>
+                    <path d="M12 22 Q12 11 22 8 Q32 11 32 22 Q32 33 22 39 Q12 33 12 22 Z"/>
+                    <path d="M17 22 L20 25 L27 18"/>
+                </svg>
+                <span class="trust-badge">Wild Atlantic Way</span>
+                <h3>Official WAW<br>Operator</h3>
+                <p>Recognised and listed as an official operator on Ireland's Wild Atlantic Way — 2,500km of the world's most dramatic coastline. The WAW endorses only operators who meet its quality and experience standards.</p>
+                <div class="trust-means">For you — part of the greatest coastal journey on earth.</div>
+            </div>
+            <div class="trust-card reveal reveal-d3">
+                <div class="trust-card-num">03</div>
+                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--gold)" stroke-width="1.4">
+                    <rect x="8" y="12" width="28" height="22" rx="2" stroke-opacity="0.3"/>
+                    <path d="M14 12 L14 8 M30 12 L30 8"/>
+                    <path d="M8 20 L36 20"/>
+                    <path d="M15 28 L20 28 M24 28 L29 28"/>
+                </svg>
+                <span class="trust-badge">BIM Certified</span>
+                <h3>Maritime Safety<br>Certified</h3>
+                <p>BIM — Ireland's Seafood Development Agency — certifies our vessels and skipper qualifications to the highest standard in Irish coastal navigation. Every crossing is made to full maritime safety specification.</p>
+                <div class="trust-means">For you — every boat, every crossing, meets the highest bar.</div>
+            </div>
+            <div class="trust-card reveal reveal-d1">
+                <div class="trust-card-num">04</div>
+                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--gold)" stroke-width="1.4">
+                    <circle cx="22" cy="22" r="18" stroke-opacity="0.3"/>
+                    <ellipse cx="22" cy="22" rx="8" ry="18"/>
+                    <path d="M8 16 L36 16 M8 28 L36 28"/>
+                </svg>
+                <span class="trust-badge">Tourism Ireland</span>
+                <h3>Nationally<br>Recommended</h3>
+                <p>Officially recommended by Tourism Ireland — the body that markets the island of Ireland to millions of visitors worldwide. When the world's travel media researches Ireland, this is the list they start with.</p>
+                <div class="trust-means">For you — chosen by the people who know Ireland best.</div>
+            </div>
+        </div>
+
+        <!-- Logo grid — fully visible -->
+        <p class="trust-logos-label">Also Recognised &amp; Certified By</p>
+        <div class="trust-logo-grid reveal">
+            <div class="trust-logo-item"><img src="logos/waw.jpg" alt="Wild Atlantic Way"></div>
+            <div class="trust-logo-item"><img src="logos/opw.png" alt="Heritage Ireland OPW"></div>
+            <div class="trust-logo-item"><img src="logos/bim.jpg" alt="BIM Ireland's Seafood Development Agency"></div>
+            <div class="trust-logo-item"><img src="logos/tourismireland.png" alt="Tourism Ireland"></div>
+            <div class="trust-logo-item"><img src="logos/discoverireland.png" alt="Discover Ireland"></div>
+            <div class="trust-logo-item"><img src="logos/flag.jpg" alt="FLAG South West"></div>
+            <div class="trust-logo-item"><img src="logos/tripadvisor.jpg" alt="TripAdvisor Award"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer id="contact">
+    <div class="f-brand">Skellig Michael Cruises</div>
+    <ul class="f-links">
+        <li><a href="https://www-1557q.bookeo.com/bookeo/b_skelligmichaelcruises_start.html?ctlsrc2=zaAhcC0M4JEyr0TK1uBj53X%2Bc7r47vR8YdGbX7HXvYY%3D&src=02r" target="_blank">Book</a></li>
+        <li><a href="#tours">Tours</a></li>
+        <li><a href="#island">The Island</a></li>
+        <li><a href="#safety">Safety</a></li>
+        <li><a href="tel:0876178114">087 617 8114</a></li>
+        <li><a href="mailto:skelligmichaelcruises@gmail.com">Email</a></li>
+    </ul>
+    <div class="f-copy">© 2026 Skellig Michael Cruises · The Pier, Portmagee, Kerry</div>
+</footer>
+
+<script>
+    const nav         = document.getElementById('mainNav');
+    const heroTrack   = document.getElementById('heroTrack');
+    const heroVideo   = document.getElementById('heroVideo');
+    const heroAudio   = document.getElementById('heroAudio');
+    const heroContent = document.getElementById('heroContent');
+    const scrollHint  = document.getElementById('scrollHint');
+
+    let videoDuration = 0;
+    let audioUnlocked = false;
+    let lastProgress  = -1;
+    let rafPending    = false;
+
+    // ── Buffer overlay — animate fill, disappears once video first frame loads
+    const bufferOverlay = document.getElementById('bufferOverlay');
+    const bufferFill    = document.getElementById('bufferFill');
+    let bufferDone      = false;
+
+    function hideBuffer() {
+        if (bufferDone) return;
+        bufferDone = true;
+        bufferFill.style.width = '100%';
+        setTimeout(() => bufferOverlay.classList.add('hidden'), 250);
+    }
+
+    // Animate fill bar gently
+    let bufferWidth = 0;
+    const bufferInterval = setInterval(() => {
+        bufferWidth = Math.min(bufferWidth + 4, 88);
+        bufferFill.style.width = bufferWidth + '%';
+    }, 80);
+
+    // Hide as soon as the first frame is decodable (loadeddata)
+    heroVideo.addEventListener('loadeddata',     () => { clearInterval(bufferInterval); hideBuffer(); }, { once: true });
+    heroVideo.addEventListener('canplay',        () => { clearInterval(bufferInterval); hideBuffer(); }, { once: true });
+    heroVideo.addEventListener('canplaythrough', () => { clearInterval(bufferInterval); hideBuffer(); }, { once: true });
+    // Hard fallback — 2.5s max
+    setTimeout(() => { clearInterval(bufferInterval); hideBuffer(); }, 2500);
+
+    heroVideo.addEventListener('loadedmetadata', () => {
+        videoDuration = heroVideo.duration;
+        heroVideo.currentTime = 0;
+    });
+
+    function unlockAudio() {
+        if (audioUnlocked) return;
+        audioUnlocked = true;
+        heroAudio.volume = 0;
+        heroAudio.play().catch(() => {});
+    }
+    document.addEventListener('scroll', unlockAudio, { once: true });
+    document.addEventListener('click',  unlockAudio, { once: true });
+
+    function onScroll() {
+        if (rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(() => {
+            rafPending = false;
+            const scrollY  = window.scrollY;
+            const trackH   = heroTrack.offsetHeight - window.innerHeight;
+            const progress = Math.max(0, Math.min(1, scrollY / trackH));
+
+            // Scrub video perfectly
+            if (videoDuration > 0 && Math.abs(progress - lastProgress) > 0.001) {
+                const t = progress * videoDuration;
+                if ('fastSeek' in heroVideo) heroVideo.fastSeek(t);
+                else heroVideo.currentTime = t;
+                lastProgress = progress;
+            }
+
+            // Audio fades in from 20% scroll, full volume at 60%
+            if (audioUnlocked && heroAudio) {
+                heroAudio.volume = progress < 0.2 ? 0
+                    : progress > 0.6 ? 0.6
+                    : ((progress - 0.2) / 0.4) * 0.6;
+            }
+
+            scrollHint.classList.toggle('hidden', scrollY > 40);
+            heroContent.classList.toggle('visible', progress > 0.72);
+            nav.classList.toggle('scrolled', scrollY > 60);
+        });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ── Scroll reveal for sections below
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                revealObserver.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ── Starfield for Star Wars section
+    const starfield = document.getElementById('starfield');
+    for (let i = 0; i < 90; i++) {
+        const s = document.createElement('div');
+        const size = Math.random() < 0.3 ? 2 : 1;
+        s.style.cssText = `
+            position:absolute;
+            width:${size}px; height:${size}px;
+            background:white; border-radius:50%;
+            left:${Math.random()*100}%; top:${Math.random()*100}%;
+            opacity:${0.05 + Math.random()*0.45};
+            animation: twinkle ${2 + Math.random()*5}s ease-in-out infinite;
+            animation-delay: ${Math.random()*6}s;
+        `;
+        starfield.appendChild(s);
+    }
+
+    // ── Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+</script>
+
+<style>
+    @keyframes twinkle {
+        0%,100% { opacity: 0.08; }
+        50%      { opacity: 0.75; }
+    }
+    /* Magnetic button — no layout shift */
+    .btn { display: inline-block; }
+    @keyframes puffinWaddle {
+        0%,100% { transform: rotate(-3deg) translateY(0px); }
+        25%      { transform: rotate(2deg)  translateY(-3px); }
+        50%      { transform: rotate(-3deg) translateY(0px); }
+        75%      { transform: rotate(2deg)  translateY(-3px); }
+    }
+    @keyframes puffinBob {
+        0%,100% { transform: translateY(0px); }
+        50%      { transform: translateY(-5px); }
+    }
+</style>
+
+<!-- PUFFIN -->
+<div id="puffin-stage">
+    <div id="puffin-bubble">Book now before it sells out! ↑</div>
+    <img id="puffin" src="puffin.png" alt="Puffin">
+</div>
+
+<script>
+    let puffinPlayed = false;
+
+    function runPuffin() {
+        if (puffinPlayed) return;
+        puffinPlayed = true;
+
+        const puffin  = document.getElementById('puffin');
+        const bubble  = document.getElementById('puffin-bubble');
+        const vw      = window.innerWidth;
+        const vh      = window.innerHeight;
+
+        // Get the Book Online Now button's position on screen
+        const bookBtn = document.querySelector('.book-ctas .btn-gold');
+        const btnRect = bookBtn ? bookBtn.getBoundingClientRect() : null;
+
+        // Walk to just under the centre of the button
+        const targetX = btnRect
+            ? Math.round(btnRect.left + btnRect.width * 0.5 - 55)
+            : Math.round(vw * 0.37);
+
+        // Start cleanly off-screen left — GSAP owns x entirely
+        gsap.set(puffin, { x: -130, y: 0, scaleX: 1, scaleY: 1, rotation: 0, opacity: 1 });
+        gsap.set(bubble, { opacity: 0, y: 0, left: targetX + 'px' });
+
+        const walkDist = targetX + 130;
+        const walkTime = Math.max(3.0, walkDist / 240); // ~240px per second
+
+        const tl = gsap.timeline({ delay: 0.4 });
+
+        // 1. Waddle in from left edge to under the button
+        tl.to(puffin, {
+            x: targetX,
+            duration: walkTime,
+            ease: 'none',
+            onStart() {
+                puffin.style.animation = 'puffinWaddle 0.4s ease-in-out infinite';
+            },
+            onComplete() {
+                puffin.style.animation = '';
+            }
+        })
+
+        // 2. Arrive — little settle bounce
+        .to(puffin, { y: -10, duration: 0.14, ease: 'power2.out' })
+        .to(puffin, { y: 0,   duration: 0.28, ease: 'bounce.out' })
+
+        // 3. Head-turn — subtle squeeze then release
+        .to(puffin, { scaleX: 0.82, duration: 0.22, ease: 'power2.inOut' })
+        .to(puffin, { scaleX: 1.0,  duration: 0.18, ease: 'power2.out'  })
+
+        // 4. Tilt beak upward toward the button
+        .to(puffin, { rotation: -20, y: -14, duration: 0.5, ease: 'power2.out' })
+
+        // 5. Bubble appears above the puffin
+        .to(bubble, { opacity: 1, y: -8, duration: 0.4, ease: 'back.out(2)' })
+
+        // 6. Hold — visitor reads the bubble
+        .to({}, { duration: 2.4 })
+
+        // 7. Bubble fades out
+        .to(bubble, { opacity: 0, duration: 0.3, ease: 'power2.in' })
+
+        // 8. Reset rotation — wind up for takeoff
+        .to(puffin, { rotation: 0, y: 0, duration: 0.28, ease: 'power2.inOut' })
+
+        // 9. Spread wings — squash wide
+        .to(puffin, { scaleX: 1.35, scaleY: 0.75, duration: 0.28, ease: 'power2.out' })
+
+        // 10. Fly straight up off screen
+        .to(puffin, {
+            y: -(vh + 200),
+            x: targetX + 30,
+            scaleX: 0.8,
+            scaleY: 1.2,
+            rotation: -8,
+            duration: 1.3,
+            ease: 'power3.in',
+            onStart() {
+                puffin.style.animation = 'puffinBob 0.26s ease-in-out infinite';
+            }
+        });
+    }
+
+    // Fire when the booking section is 40% in view
+    const bookSection   = document.getElementById('book');
+    const puffinObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                runPuffin();
+                puffinObserver.disconnect();
+            }
+        });
+    }, { threshold: 0.4 });
+    puffinObserver.observe(bookSection);
+</script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ══════════════════════════════════════
+// PAGE LOADER
+// ══════════════════════════════════════
+const loader    = document.getElementById('loader');
+const loaderLogo = loader.querySelector('.loader-logo');
+const loaderLine = document.getElementById('loaderLine');
+
+const loaderTl = gsap.timeline({
+    onComplete: () => {
+        gsap.to(loader, {
+            opacity: 0, duration: 0.7, ease: 'power2.in',
+            onComplete: () => { loader.style.display = 'none'; }
+        });
+    }
+});
+
+loaderTl
+    .to(loaderLogo, { opacity: 1, duration: 0.8, ease: 'power2.out' })
+    .to(loaderLine, { width: 180, duration: 1.1, ease: 'power3.inOut' }, '-=0.2')
+    .to({}, { duration: 0.4 });
+
+// ══════════════════════════════════════
+// CUSTOM CURSOR
+// ══════════════════════════════════════
+const dot = document.getElementById('cursorDot');
+let mx = 0, my = 0;
+
+document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+});
+
+document.querySelectorAll('a, button, .btn, .tour-card').forEach(el => {
+    el.addEventListener('mouseenter', () => dot.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => dot.classList.remove('hovering'));
+});
+
+// ══════════════════════════════════════
+// MIST PARTICLES ON HERO
+// ══════════════════════════════════════
+const mistCanvas = document.getElementById('mist-canvas');
+const mCtx = mistCanvas.getContext('2d');
+let mists = [];
+
+function resizeMist() {
+    mistCanvas.width  = mistCanvas.offsetWidth;
+    mistCanvas.height = mistCanvas.offsetHeight;
+}
+resizeMist();
+window.addEventListener('resize', resizeMist);
+
+function makeMist() {
+    return {
+        x: Math.random() * mistCanvas.width,
+        y: mistCanvas.height + 10,
+        r: Math.random() * 3 + 1,
+        speed: Math.random() * 0.4 + 0.15,
+        opacity: Math.random() * 0.4 + 0.05,
+        drift: (Math.random() - 0.5) * 0.3,
+        life: 1
+    };
+}
+
+for (let i = 0; i < 80; i++) {
+    const m = makeMist();
+    m.y = Math.random() * mistCanvas.height;
+    mists.push(m);
+}
+
+function animateMist() {
+    mCtx.clearRect(0, 0, mistCanvas.width, mistCanvas.height);
+    mists.forEach((m, i) => {
+        m.y      -= m.speed;
+        m.x      += m.drift;
+        m.opacity -= 0.0008;
+
+        if (m.y < -10 || m.opacity <= 0) {
+            mists[i] = makeMist();
+            return;
+        }
+
+        mCtx.beginPath();
+        mCtx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        mCtx.fillStyle = `rgba(201,169,110,${m.opacity})`;
+        mCtx.fill();
+    });
+    requestAnimationFrame(animateMist);
+}
+animateMist();
+
+// ══════════════════════════════════════
+// MAGNETIC BUTTONS
+// ══════════════════════════════════════
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const cx = r.left + r.width  / 2;
+        const cy = r.top  + r.height / 2;
+        const dx = (e.clientX - cx) * 0.28;
+        const dy = (e.clientY - cy) * 0.28;
+        gsap.to(btn, { x: dx, y: dy, duration: 0.35, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.55, ease: 'elastic.out(1,0.5)' });
+    });
+});
+
+// ══════════════════════════════════════
+// WORD-BY-WORD REVEAL ON HEADINGS
+// ══════════════════════════════════════
+document.querySelectorAll('.heading, .book-title').forEach(el => {
+    const html = el.innerHTML;
+    el.classList.add('word-reveal');
+    el.innerHTML = html.replace(/(\S+)/g, (w) =>
+        w.startsWith('<') ? w : `<span class="word">${w}</span>`
+    );
+
+    const words = el.querySelectorAll('.word');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                el.classList.add('triggered');
+                words.forEach((w, i) => {
+                    w.style.transitionDelay = (i * 0.07) + 's';
+                });
+                obs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.3 });
+    obs.observe(el);
+});
+
+// ══════════════════════════════════════
+// ANIMATED COUNTERS
+// ══════════════════════════════════════
+function animateCounter(el, target, duration = 1800) {
+    const start = performance.now();
+    const isYear = target > 1000;
+    (function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        const val = Math.floor(ease * target);
+        el.textContent = isYear ? val : val.toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toLocaleString ? target.toLocaleString() : target;
+    })(start);
+}
+
+const counters = [
+    { selector: '.stats-grid .stat:nth-child(1) .stat-n', target: 618 },
+    { selector: '.stats-grid .stat:nth-child(2) .stat-n', target: 1400 },
+    { selector: '.stats-grid .stat:nth-child(3) .stat-n', target: 1996 },
+];
+
+counters.forEach(({ selector, target }) => {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+            animateCounter(el, target);
+            obs.unobserve(el);
+        }
+    }, { threshold: 0.5 });
+    obs.observe(el);
+});
+
+// ══════════════════════════════════════
+// STAR WARS PARALLAX BG
+// ══════════════════════════════════════
+const swSection = document.getElementById('starwars');
+const swBg      = document.getElementById('swBg');
+
+if (swSection && swBg) {
+    window.addEventListener('scroll', () => {
+        const rect  = swSection.getBoundingClientRect();
+        const pct   = -rect.top / (swSection.offsetHeight + window.innerHeight);
+        const shift = pct * 60; // px of parallax travel
+        swBg.style.transform = `scale(1.05) translateY(${shift}px)`;
+    }, { passive: true });
+}
+
+// ══════════════════════════════════════
+// 3D TILT ON TOUR CARDS + FLEET CARDS
+// ══════════════════════════════════════
+document.querySelectorAll('.tour-card, .fleet-card, .trust-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const r  = card.getBoundingClientRect();
+        const cx = r.left + r.width  / 2;
+        const cy = r.top  + r.height / 2;
+        const rx2 = ((e.clientY - cy) / r.height) * -10;
+        const ry2 = ((e.clientX - cx) / r.width)  *  10;
+        gsap.to(card, {
+            rotateX: rx2, rotateY: ry2,
+            transformPerspective: 900,
+            duration: 0.4,
+            ease: 'power2.out'
+        });
+    });
+    card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+            rotateX: 0, rotateY: 0,
+            duration: 0.7,
+            ease: 'elastic.out(1, 0.5)'
+        });
+    });
+});
+</script>
+
+</body>
+</html>
