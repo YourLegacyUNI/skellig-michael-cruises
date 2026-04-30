@@ -767,22 +767,50 @@
         /* ═══════════════ BOOK CTA ═══════════════ */
         .book-section {
             position: relative;
-            padding: 9rem 3rem;
+            padding: 0;
             text-align: center;
             overflow: hidden;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .book-glow {
+        .book-bg {
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 50% 100%, rgba(201,169,110,0.07) 0%, transparent 60%);
+            background-image: url('skellig-bottom.png');
+            background-size: cover;
+            background-position: center 40%;
+            transform: scale(1.06);
+            will-change: transform;
+        }
+
+        /* Fade from site above, dramatic vignette, fade to black below */
+        .book-bg-fade {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to bottom,
+                    var(--black)        0%,
+                    rgba(7,9,12,0.15)  18%,
+                    rgba(7,9,12,0.0)   35%,
+                    rgba(7,9,12,0.0)   60%,
+                    rgba(7,9,12,0.55)  80%,
+                    var(--black)       100%
+                ),
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
             pointer-events: none;
         }
 
+        .book-glow { display: none; }
+
         .book-inner {
             position: relative;
-            max-width: 640px;
+            z-index: 2;
+            max-width: 680px;
             margin: 0 auto;
+            padding: 9rem 3rem;
         }
 
         .book-title {
@@ -2069,6 +2097,8 @@
 
 <!-- ═══════ BOOK CTA ═══════ -->
 <section class="book-section" id="book">
+    <div class="book-bg" id="bookBg"></div>
+    <div class="book-bg-fade"></div>
     <div class="book-glow"></div>
     <div class="book-inner reveal">
         <span class="label">2026 Season · Tours Departing Daily</span>
@@ -2600,8 +2630,22 @@ if (swSection && swBg) {
     window.addEventListener('scroll', () => {
         const rect  = swSection.getBoundingClientRect();
         const pct   = -rect.top / (swSection.offsetHeight + window.innerHeight);
-        const shift = pct * 60; // px of parallax travel
+        const shift = pct * 60;
         swBg.style.transform = `scale(1.05) translateY(${shift}px)`;
+    }, { passive: true });
+}
+
+// ══════════════════════════════════════
+// BOOK SECTION PARALLAX
+// ══════════════════════════════════════
+const bookBg = document.getElementById('bookBg');
+const bookSec = document.getElementById('book');
+if (bookBg && bookSec) {
+    window.addEventListener('scroll', () => {
+        const rect  = bookSec.getBoundingClientRect();
+        const pct   = -rect.top / (bookSec.offsetHeight + window.innerHeight);
+        const shift = pct * 80;
+        bookBg.style.transform = `scale(1.06) translateY(${shift}px)`;
     }, { passive: true });
 }
 
