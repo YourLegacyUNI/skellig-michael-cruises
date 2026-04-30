@@ -6,25 +6,37 @@
     <title>Skellig Michael Cruises — Paul Devane · Portmagee, Kerry</title>
     <meta name="description" content="Boat tours to Skellig Michael, Kerry. Landing tours and Eco Cruises from Portmagee Marina. Book your 2026 tour with Paul Devane.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --black:     #07090c;
-            --dark:      #0d1017;
-            --slate:     #141820;
-            --ocean:     #0d1e2e;
-            --teal:      #1b6b8a;
-            --teal-lt:   #2fa8cc;
-            --teal-glow: rgba(27,107,138,0.1);
-            --gold:      #c9a96e;
-            --gold-lt:   #e8d4a8;
-            --white:     #f0ede8;
-            --muted:     rgba(240,237,232,0.55);
-            --faint:     rgba(240,237,232,0.08);
+            --black:          #07090c;
+            --dark:           #0d1017;
+            --slate:          #141820;
+            --ocean:          #0d1e2e;
+            --teal:           #1b6b8a;
+            --teal-lt:        #2fa8cc;
+            --teal-glow:      rgba(27,107,138,0.1);
+            --gold:           #c9a96e;
+            --gold-lt:        #e8d4a8;
+            --white:          #f0ede8;
+            --muted:          rgba(240,237,232,0.55);
+            --faint:          rgba(240,237,232,0.08);
+            /* Atlantic palette */
+            --atlantic-deep:  #020c18;
+            --atlantic-mid:   #071e38;
+            --atlantic-light: #0d3464;
+            --turquoise:      #2fa8cc;
+            --emerald:        #1a8c6e;
+            --golden:         #c9a96e;
+            --stone:          #8a9aaa;
+            --beige:          #d8cfc0;
+            --foam:           #f0ede8;
+            --moonlight:      #e8eadc;
+            --starfield:      #010308;
         }
 
         html { scroll-behavior: smooth; }
@@ -32,7 +44,7 @@
         body {
             background: var(--black);
             color: var(--white);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Jost', sans-serif;
             font-weight: 300;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -354,6 +366,7 @@
         /* ═══════════════ UTILITIES ═══════════════ */
         .label {
             display: block;
+            font-family: 'Cormorant SC', serif;
             font-size: 0.62rem;
             letter-spacing: 0.38em;
             text-transform: uppercase;
@@ -1584,6 +1597,340 @@
 
             .marquee-track img { height: 180px; }
         }
+
+        /* ═══════════════ THE CROSSING ═══════════════ */
+        .crossing-section {
+            position: relative;
+            background: var(--atlantic-mid);
+            overflow: hidden;
+            padding: 9rem 3rem 10rem;
+        }
+        .crossing-waves-container {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 140px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .crossing-wave {
+            position: absolute;
+            bottom: -20px; left: -50%;
+            width: 200%;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(47,168,204,0.06);
+            animation: waveRoll 9s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+        .crossing-wave:nth-child(2) {
+            animation-delay: -3s;
+            animation-duration: 12s;
+            background: rgba(47,168,204,0.04);
+        }
+        .crossing-wave:nth-child(3) {
+            animation-delay: -6s;
+            animation-duration: 7s;
+            background: rgba(255,255,255,0.025);
+        }
+        @keyframes waveRoll {
+            0%,100% { transform: translateX(0) scaleY(1); }
+            40%      { transform: translateX(4%) scaleY(1.12); }
+            60%      { transform: translateX(-2%) scaleY(0.9); }
+        }
+        .crossing-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .crossing-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.9rem, 3.5vw, 3rem);
+            font-weight: 300;
+            color: var(--foam);
+            line-height: 1.35;
+        }
+        .crossing-quote cite {
+            display: block;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            font-family: 'Cormorant SC', serif;
+            letter-spacing: 0.18em;
+            color: var(--turquoise);
+            font-style: normal;
+        }
+        .crossing-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        .crossing-stat {
+            border-left: 1px solid rgba(47,168,204,0.4);
+            padding-left: 1.6rem;
+        }
+        .crossing-stat-n {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 300;
+            color: var(--turquoise);
+            display: block;
+            line-height: 1;
+        }
+        .crossing-stat-l {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.5);
+            margin-top: 0.35rem;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .crossing-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+        }
+
+        /* ═══════════════ THE ATLANTIC ═══════════════ */
+        .atlantic-section {
+            position: relative;
+            background: var(--atlantic-deep);
+            overflow: hidden;
+            padding: 10rem 3rem;
+            text-align: center;
+        }
+        .atlantic-shimmer {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(47,168,204,0.03) 20%,
+                rgba(47,168,204,0.07) 50%,
+                rgba(47,168,204,0.03) 80%,
+                transparent 100%
+            );
+            background-size: 300% 100%;
+            animation: shimmerSweep 7s ease-in-out infinite;
+        }
+        @keyframes shimmerSweep {
+            0%   { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+        .atlantic-shimmer2 {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 120% 60% at 50% 100%, rgba(47,168,204,0.05) 0%, transparent 70%);
+            animation: shimmerSweep 11s ease-in-out infinite reverse;
+            background-size: 200% 200%;
+        }
+        .atlantic-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .atlantic-label {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--turquoise);
+            display: block;
+            margin-bottom: 2.5rem;
+        }
+        .atlantic-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+            font-weight: 300;
+            color: var(--moonlight);
+            line-height: 1.25;
+            margin-bottom: 4.5rem;
+        }
+        .atlantic-stats {
+            display: flex;
+            justify-content: center;
+            gap: 5rem;
+            flex-wrap: wrap;
+        }
+        .atlantic-stat { text-align: center; }
+        .atlantic-stat-n {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.8rem;
+            font-weight: 300;
+            color: var(--turquoise);
+            display: block;
+            line-height: 1;
+        }
+        .atlantic-stat-l {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.67rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(240,237,232,0.45);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        /* ═══════════════ STARFIELD SECTION ═══════════════ */
+        .star-section {
+            position: relative;
+            background: var(--starfield);
+            overflow: hidden;
+            min-height: 72vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9rem 3rem;
+            text-align: center;
+        }
+        #starfield-new {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .star-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        .star-label {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--turquoise);
+            display: block;
+            margin-bottom: 2rem;
+        }
+        .star-headline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 300;
+            color: var(--moonlight);
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            text-shadow:
+                0 0 40px rgba(240,237,232,0.25),
+                0 0 100px rgba(47,168,204,0.12);
+        }
+        .star-body {
+            font-family: 'Jost', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            color: rgba(240,237,232,0.5);
+            line-height: 1.85;
+        }
+
+        /* ═══════════════ BIRD'S EYE ═══════════════ */
+        .birdseye-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .birdseye-ocean {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 25% 65%, rgba(47,168,204,0.55) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 40% at 75% 35%, rgba(13,52,100,0.8) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 80% at 50% 50%, var(--atlantic-mid) 0%, var(--atlantic-deep) 100%);
+            animation: oceanbreathe 9s ease-in-out infinite;
+        }
+        @keyframes oceanbreathe {
+            0%,100% { filter: brightness(1); transform: scale(1); }
+            50%      { filter: brightness(1.15); transform: scale(1.015); }
+        }
+        .birdseye-shimmer1 {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                transparent 0%,
+                rgba(255,255,255,0.02) 25%,
+                rgba(255,255,255,0.06) 50%,
+                rgba(255,255,255,0.02) 75%,
+                transparent 100%
+            );
+            background-size: 200% 200%;
+            animation: beShimmer 5s ease-in-out infinite;
+        }
+        @keyframes beShimmer {
+            0%   { background-position: 0% 0%; }
+            100% { background-position: 200% 200%; }
+        }
+        .birdseye-shimmer2 {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                -60deg,
+                transparent 0%,
+                rgba(47,168,204,0.03) 30%,
+                rgba(47,168,204,0.08) 50%,
+                rgba(47,168,204,0.03) 70%,
+                transparent 100%
+            );
+            background-size: 300% 300%;
+            animation: beShimmer2 8s ease-in-out infinite alternate;
+        }
+        @keyframes beShimmer2 {
+            0%   { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .birdseye-vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 90% 90% at 50% 50%, transparent 25%, rgba(0,4,12,0.9) 100%);
+        }
+        #foam-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .birdseye-inner {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 2rem;
+        }
+        .birdseye-label {
+            font-family: 'Cormorant SC', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            display: block;
+            margin-bottom: 2rem;
+        }
+        .birdseye-headline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(5rem, 13vw, 10.5rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--foam);
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            text-shadow: 0 0 80px rgba(255,255,255,0.12), 0 0 160px rgba(47,168,204,0.08);
+            margin-bottom: 1.8rem;
+        }
+        .birdseye-sub {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+        }
     </style>
 </head>
 <body>
@@ -1847,6 +2194,35 @@
     </div>
 </section>
 
+<!-- ═══════ THE CROSSING ═══════ -->
+<section class="crossing-section">
+    <div class="crossing-waves-container">
+        <div class="crossing-wave"></div>
+        <div class="crossing-wave"></div>
+        <div class="crossing-wave"></div>
+    </div>
+    <div class="crossing-inner reveal">
+        <blockquote class="crossing-quote">
+            "The Atlantic doesn't offer passage lightly. You earn the island — eight miles of open ocean between you and one of the most extraordinary places on earth."
+            <cite>The Crossing — Portmagee to Skellig Michael</cite>
+        </blockquote>
+        <div class="crossing-stats">
+            <div class="crossing-stat reveal reveal-d1">
+                <span class="crossing-stat-n">8</span>
+                <span class="crossing-stat-l">Miles of open Atlantic</span>
+            </div>
+            <div class="crossing-stat reveal reveal-d2">
+                <span class="crossing-stat-n">60</span>
+                <span class="crossing-stat-l">Minutes each way</span>
+            </div>
+            <div class="crossing-stat reveal reveal-d3">
+                <span class="crossing-stat-n">715<span style="font-size:1.6rem">ft</span></span>
+                <span class="crossing-stat-l">Peak height above the sea</span>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ═══════ FLEET ═══════ -->
 <section class="fleet-section" id="fleet">
     <div class="fleet-inner">
@@ -1982,6 +2358,34 @@
     </div>
 </section>
 
+<!-- ═══════ THE ATLANTIC ═══════ -->
+<section class="atlantic-section">
+    <div class="atlantic-shimmer"></div>
+    <div class="atlantic-shimmer2"></div>
+    <div class="atlantic-inner reveal">
+        <span class="atlantic-label">Wild Atlantic Way · Kerry, Ireland</span>
+        <p class="atlantic-quote">"There is no ocean more alive than this one. And no rock more ancient, more remote, or more worth reaching."</p>
+        <div class="atlantic-stats">
+            <div class="atlantic-stat reveal reveal-d1">
+                <span class="atlantic-stat-n">50,000</span>
+                <span class="atlantic-stat-l">Puffins nest on the Skelligs</span>
+            </div>
+            <div class="atlantic-stat reveal reveal-d2">
+                <span class="atlantic-stat-n">30,000</span>
+                <span class="atlantic-stat-l">Gannets on Little Skellig</span>
+            </div>
+            <div class="atlantic-stat reveal reveal-d3">
+                <span class="atlantic-stat-n">600 AD</span>
+                <span class="atlantic-stat-l">First monks on the island</span>
+            </div>
+            <div class="atlantic-stat reveal reveal-d1">
+                <span class="atlantic-stat-n">15</span>
+                <span class="atlantic-stat-l">Licensed landing operators</span>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ═══════ TESTIMONIALS ═══════ -->
 <section class="testimonials-section">
     <div class="testimonials-inner">
@@ -2006,6 +2410,16 @@
                 <div class="t-author">Jenis C. · Italy · TripAdvisor</div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- ═══════ STARFIELD ═══════ -->
+<section class="star-section">
+    <div id="starfield-new"></div>
+    <div class="star-inner reveal">
+        <span class="star-label">Skellig Michael · After Dark · No Light Pollution</span>
+        <h2 class="star-headline">Where Monks<br>Mapped the Stars</h2>
+        <p class="star-body">On the summit of Skellig Michael, twelve monks once sat in darkness and counted the heavens. At 714 feet above the Atlantic, with no electric light for sixty miles in any direction, the sky above Skellig is among the darkest in Europe. On a clear night, the Milky Way falls like a river over the monastery. The monks would have seen the same stars. This is the rarest kind of silence — one that has lasted fifteen centuries.</p>
     </div>
 </section>
 
@@ -2092,6 +2506,20 @@
             <h4>The Island</h4>
             <p>This is a living wilderness site. Accidents have occurred. An OPW guide meets you at the lighthouse road — follow their instructions without exception. Stay on the path. The walls are 1,400 years old and held together by nothing but skill and time.</p>
         </div>
+    </div>
+</section>
+
+<!-- ═══════ BIRD'S EYE ═══════ -->
+<section class="birdseye-section">
+    <div class="birdseye-ocean"></div>
+    <div class="birdseye-shimmer1"></div>
+    <div class="birdseye-shimmer2"></div>
+    <canvas id="foam-canvas"></canvas>
+    <div class="birdseye-vignette"></div>
+    <div class="birdseye-inner reveal">
+        <span class="birdseye-label">300 metres above the Atlantic · Skellig Michael</span>
+        <h2 class="birdseye-headline">Become<br>the bird.</h2>
+        <p class="birdseye-sub">Look down. This is what the gannets see every morning.</p>
     </div>
 </section>
 
@@ -2674,6 +3102,109 @@ document.querySelectorAll('.tour-card, .fleet-card, .trust-card').forEach(card =
         });
     });
 });
+
+// ══════════════════════════════════════
+// STARFIELD — new star section
+// ══════════════════════════════════════
+const starfieldNew = document.getElementById('starfield-new');
+if (starfieldNew) {
+    for (let i = 0; i < 190; i++) {
+        const s = document.createElement('div');
+        const size = Math.random() < 0.08 ? 2 : 1;
+        const brightness = 0.25 + Math.random() * 0.75;
+        s.style.cssText = `
+            position:absolute;
+            width:${size}px;height:${size}px;
+            background:white;border-radius:50%;
+            left:${Math.random()*100}%;top:${Math.random()*100}%;
+            opacity:${(brightness * 0.65).toFixed(2)};
+            animation:twinkle ${2.5+Math.random()*6}s ease-in-out infinite;
+            animation-delay:${(Math.random()*9).toFixed(2)}s;
+        `;
+        starfieldNew.appendChild(s);
+    }
+    // A handful of brighter "hero" stars
+    for (let i = 0; i < 12; i++) {
+        const s = document.createElement('div');
+        s.style.cssText = `
+            position:absolute;
+            width:2px;height:2px;
+            background:rgba(200,220,255,0.9);border-radius:50%;
+            left:${Math.random()*100}%;top:${Math.random()*100}%;
+            box-shadow:0 0 4px rgba(200,220,255,0.8),0 0 8px rgba(47,168,204,0.4);
+            animation:twinkle ${1.5+Math.random()*3}s ease-in-out infinite;
+            animation-delay:${(Math.random()*6).toFixed(2)}s;
+        `;
+        starfieldNew.appendChild(s);
+    }
+}
+
+// ══════════════════════════════════════
+// FOAM STREAKS — Bird's Eye canvas
+// ══════════════════════════════════════
+const foamCanvas = document.getElementById('foam-canvas');
+if (foamCanvas) {
+    const fCtx = foamCanvas.getContext('2d');
+    let foamStreaks = [];
+
+    function resizeFoam() {
+        foamCanvas.width  = foamCanvas.offsetWidth;
+        foamCanvas.height = foamCanvas.offsetHeight;
+    }
+    resizeFoam();
+    window.addEventListener('resize', resizeFoam);
+
+    function makeStreak() {
+        const angle = (Math.random() * 50 - 25) * Math.PI / 180;
+        const speed = 0.25 + Math.random() * 0.5;
+        return {
+            x: Math.random() * foamCanvas.width,
+            y: Math.random() * foamCanvas.height,
+            length: 50 + Math.random() * 140,
+            width:  0.3 + Math.random() * 0.7,
+            opacity: 0.06 + Math.random() * 0.14,
+            angle:  angle,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+        };
+    }
+
+    for (let i = 0; i < 40; i++) foamStreaks.push(makeStreak());
+
+    function animateFoam() {
+        fCtx.clearRect(0, 0, foamCanvas.width, foamCanvas.height);
+        foamStreaks.forEach((s, i) => {
+            s.x += s.vx;
+            s.y += s.vy;
+
+            if (s.x > foamCanvas.width + 200 || s.y > foamCanvas.height + 60 || s.y < -60 || s.x < -200) {
+                foamStreaks[i] = makeStreak();
+                foamStreaks[i].x = Math.random() < 0.5 ? -60 : Math.random() * foamCanvas.width;
+                foamStreaks[i].y = Math.random() * foamCanvas.height;
+                return;
+            }
+
+            const ex = s.x + Math.cos(s.angle) * s.length;
+            const ey = s.y + Math.sin(s.angle) * s.length;
+
+            fCtx.beginPath();
+            fCtx.moveTo(s.x, s.y);
+            fCtx.lineTo(ex, ey);
+
+            const grad = fCtx.createLinearGradient(s.x, s.y, ex, ey);
+            grad.addColorStop(0,   'rgba(255,255,255,0)');
+            grad.addColorStop(0.3, `rgba(255,255,255,${s.opacity})`);
+            grad.addColorStop(0.7, `rgba(255,255,255,${s.opacity})`);
+            grad.addColorStop(1,   'rgba(255,255,255,0)');
+
+            fCtx.strokeStyle = grad;
+            fCtx.lineWidth   = s.width;
+            fCtx.stroke();
+        });
+        requestAnimationFrame(animateFoam);
+    }
+    animateFoam();
+}
 </script>
 
 </body>
