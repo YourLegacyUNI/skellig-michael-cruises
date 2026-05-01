@@ -42,8 +42,8 @@
         html { scroll-behavior: smooth; }
 
         body {
-            background: var(--black);
-            color: var(--white);
+            background: var(--atlantic-deep);
+            color: var(--foam);
             font-family: 'Jost', sans-serif;
             font-weight: 300;
             overflow-x: hidden;
@@ -64,9 +64,9 @@
         }
 
         nav.scrolled {
-            background: rgba(7, 9, 12, 0.88);
-            backdrop-filter: blur(16px);
-            border-color: rgba(201,169,110,0.12);
+            background: rgba(2, 12, 24, 0.92);
+            backdrop-filter: blur(20px);
+            border-color: rgba(47,168,204,0.18);
         }
 
         .nav-brand {
@@ -75,7 +75,7 @@
             font-weight: 400;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--white);
+            color: var(--foam);
             text-decoration: none;
         }
 
@@ -94,21 +94,21 @@
             transition: color 0.2s;
         }
 
-        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover { color: var(--turquoise); }
 
         .nav-cta {
             font-size: 0.72rem;
             letter-spacing: 0.1em;
-            color: var(--gold);
+            color: var(--turquoise);
             text-decoration: none;
-            border: 1px solid rgba(201,169,110,0.35);
+            border: 1px solid rgba(47,168,204,0.35);
             padding: 0.55rem 1.2rem;
             transition: background 0.25s, color 0.25s;
         }
 
         .nav-cta:hover {
-            background: var(--gold);
-            color: var(--black);
+            background: var(--turquoise);
+            color: var(--atlantic-deep);
         }
 
         /* ═══════════════ HERO ═══════════════ */
@@ -129,7 +129,7 @@
             justify-content: center;
             flex-direction: column;
             gap: 1rem;
-            background: rgba(7,9,12,0.85);
+            background: rgba(2,12,24,0.9);
             transition: opacity 0.8s ease;
         }
 
@@ -154,7 +154,7 @@
             position: absolute;
             left: 0; top: 0; height: 100%;
             width: 0%;
-            background: var(--gold);
+            background: var(--turquoise);
             transition: width 0.2s linear;
         }
 
@@ -186,10 +186,10 @@
             z-index: 1;
             background:
                 linear-gradient(to bottom,
-                    rgba(7,9,12,0.15) 0%,
-                    rgba(7,9,12,0.0)  30%,
-                    rgba(7,9,12,0.45) 75%,
-                    rgba(7,9,12,1)    100%
+                    rgba(2,12,24,0.2)  0%,
+                    rgba(2,12,24,0.0)  30%,
+                    rgba(2,12,24,0.4)  75%,
+                    rgba(2,12,24,1)    100%
                 );
         }
 
@@ -235,7 +235,7 @@
         .scroll-hint-line {
             width: 1px;
             height: 48px;
-            background: linear-gradient(to bottom, var(--gold), transparent);
+            background: linear-gradient(to bottom, var(--turquoise), transparent);
             animation: linePulse 2.2s ease infinite;
         }
 
@@ -244,7 +244,7 @@
             font-size: 0.65rem;
             letter-spacing: 0.4em;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--turquoise);
             margin-bottom: 1.6rem;
         }
 
@@ -254,7 +254,7 @@
             font-weight: 300;
             line-height: 0.95;
             letter-spacing: 0.04em;
-            color: var(--white);
+            color: var(--foam);
             margin-bottom: 1.2rem;
         }
 
@@ -294,24 +294,26 @@
         }
 
         .btn-gold {
-            background: var(--gold);
-            color: var(--black);
+            background: var(--turquoise);
+            color: var(--atlantic-deep);
+            font-weight: 500;
         }
 
         .btn-gold:hover {
-            background: var(--gold-lt);
+            background: #5fc4e0;
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(201,169,110,0.22);
+            box-shadow: 0 12px 36px rgba(47,168,204,0.35);
         }
 
         .btn-ghost {
-            border: 1px solid rgba(240,237,232,0.35);
-            color: var(--white);
+            border: 1px solid rgba(47,168,204,0.4);
+            color: var(--turquoise);
         }
 
         .btn-ghost:hover {
-            border-color: var(--gold);
-            color: var(--gold);
+            border-color: var(--turquoise);
+            background: rgba(47,168,204,0.1);
+            color: var(--foam);
         }
 
         .scroll-cue {
@@ -338,7 +340,7 @@
         .scroll-cue-line {
             width: 1px;
             height: 48px;
-            background: linear-gradient(to bottom, var(--gold), transparent);
+            background: linear-gradient(to bottom, var(--turquoise), transparent);
             animation: linePulse 2.2s ease infinite;
         }
 
@@ -370,7 +372,7 @@
             font-size: 0.62rem;
             letter-spacing: 0.38em;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--turquoise);
             margin-bottom: 1rem;
         }
 
@@ -379,13 +381,13 @@
             font-size: clamp(2rem, 4vw, 3.6rem);
             font-weight: 300;
             line-height: 1.12;
-            color: var(--white);
+            color: var(--foam);
         }
 
         .rule {
             width: 40px;
             height: 1px;
-            background: var(--gold);
+            background: var(--turquoise);
             margin: 1.8rem 0;
             opacity: 0.5;
         }
@@ -393,7 +395,7 @@
         .divider-line {
             width: 1px;
             height: 72px;
-            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            background: linear-gradient(to bottom, transparent, var(--turquoise), transparent);
             margin: 0 auto;
         }
 
@@ -403,6 +405,7 @@
             margin: 0 auto;
             padding: 5.5rem 2rem;
             text-align: center;
+            position: relative;
         }
 
         .intro p {
@@ -414,7 +417,7 @@
             color: rgba(240,237,232,0.8);
         }
 
-        .intro .accent { color: var(--gold); font-style: normal; }
+        .intro .accent { color: var(--turquoise); font-style: normal; }
 
         /* ═══════════════ TOURS ═══════════════ */
         .tours-section {
@@ -432,11 +435,11 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3px;
-            background: rgba(201,169,110,0.08);
+            background: rgba(47,168,204,0.08);
         }
 
         .tour-card {
-            background: var(--dark);
+            background: var(--atlantic-mid);
             padding: 3.5rem 3rem 3rem;
             position: relative;
             overflow: hidden;
@@ -450,7 +453,7 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 2px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            background: linear-gradient(to right, transparent, var(--turquoise), transparent);
             opacity: 0;
             transition: opacity 0.4s;
         }
@@ -462,8 +465,8 @@
             font-size: 0.6rem;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            color: var(--gold);
-            border: 1px solid rgba(201,169,110,0.3);
+            color: var(--turquoise);
+            border: 1px solid rgba(47,168,204,0.3);
             padding: 0.3rem 0.8rem;
             margin-bottom: 1.5rem;
         }
@@ -473,7 +476,7 @@
             font-size: 2.1rem;
             font-weight: 300;
             line-height: 1.15;
-            color: var(--white);
+            color: var(--foam);
             margin-bottom: 1.4rem;
         }
 
@@ -502,7 +505,7 @@
 
         .tour-facts li::before {
             content: '—';
-            color: var(--gold);
+            color: var(--turquoise);
             flex-shrink: 0;
             margin-top: 0.05em;
         }
@@ -514,7 +517,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 7rem;
             font-weight: 300;
-            color: rgba(201,169,110,0.05);
+            color: rgba(47,168,204,0.05);
             line-height: 1;
             pointer-events: none;
             user-select: none;
@@ -543,10 +546,10 @@
             inset: 0;
             background: linear-gradient(
                 to bottom,
-                rgba(7,9,12,0.55) 0%,
-                rgba(7,9,12,0.35) 40%,
-                rgba(7,9,12,0.72) 85%,
-                rgba(7,9,12,1)    100%
+                rgba(2,12,24,0.5)  0%,
+                rgba(2,12,24,0.28) 40%,
+                rgba(2,12,24,0.75) 85%,
+                rgba(2,12,24,1)    100%
             );
         }
 
@@ -576,7 +579,7 @@
             font-weight: 300;
             font-style: italic;
             line-height: 1.15;
-            color: var(--white);
+            color: var(--foam);
             margin-bottom: 0.5rem;
         }
 
@@ -584,7 +587,7 @@
             font-size: 0.68rem;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            color: rgba(201,169,110,0.6);
+            color: rgba(47,168,204,0.6);
             margin-bottom: 2.5rem;
         }
 
@@ -620,12 +623,12 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5px;
-            background: rgba(201,169,110,0.08);
+            background: rgba(47,168,204,0.08);
             margin-top: 3rem;
         }
 
         .stat {
-            background: var(--dark);
+            background: var(--atlantic-mid);
             padding: 1.8rem 1.5rem;
             text-align: center;
         }
@@ -634,7 +637,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.8rem;
             font-weight: 300;
-            color: var(--gold);
+            color: var(--turquoise);
             line-height: 1;
             display: block;
             margin-bottom: 0.4rem;
@@ -649,8 +652,8 @@
 
         .unesco-card {
             padding: 3rem;
-            border-left: 2px solid var(--gold);
-            background: var(--dark);
+            border-left: 2px solid var(--turquoise);
+            background: var(--atlantic-mid);
             position: sticky;
             top: 6rem;
         }
@@ -668,13 +671,13 @@
             font-size: 0.68rem;
             letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--turquoise);
             font-style: normal;
         }
 
         /* ═══════════════ TESTIMONIALS ═══════════════ */
         .testimonials-section {
-            background: var(--dark);
+            background: var(--atlantic-mid);
             padding: 7rem 3rem;
         }
 
@@ -692,11 +695,11 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2px;
-            background: rgba(201,169,110,0.06);
+            background: rgba(47,168,204,0.06);
         }
 
         .t-card {
-            background: var(--black);
+            background: var(--atlantic-deep);
             padding: 2.8rem 2.5rem;
             position: relative;
         }
@@ -705,7 +708,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 4.5rem;
             line-height: 1;
-            color: var(--gold);
+            color: var(--turquoise);
             opacity: 0.25;
             position: absolute;
             top: 1.2rem;
@@ -726,7 +729,7 @@
             font-size: 0.68rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--turquoise);
         }
 
         /* ═══════════════ KNOW BEFORE ═══════════════ */
@@ -745,11 +748,11 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2px;
-            background: rgba(201,169,110,0.06);
+            background: rgba(47,168,204,0.06);
         }
 
         .know-card {
-            background: var(--slate);
+            background: var(--atlantic-mid);
             padding: 2.5rem 2rem;
         }
 
@@ -757,7 +760,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.3rem;
             font-weight: 400;
-            color: var(--white);
+            color: var(--foam);
             margin-bottom: 1rem;
         }
 
@@ -771,7 +774,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.8rem;
             font-weight: 300;
-            color: var(--gold);
+            color: var(--turquoise);
             opacity: 0.4;
             display: block;
             margin-bottom: 0.8rem;
@@ -799,20 +802,20 @@
             will-change: transform;
         }
 
-        /* Fade from site above, dramatic vignette, fade to black below */
+        /* Fade from site above, dramatic vignette, fade to atlantic-deep below */
         .book-bg-fade {
             position: absolute;
             inset: 0;
             background:
                 linear-gradient(to bottom,
-                    var(--black)        0%,
-                    rgba(7,9,12,0.15)  18%,
-                    rgba(7,9,12,0.0)   35%,
-                    rgba(7,9,12,0.0)   60%,
-                    rgba(7,9,12,0.55)  80%,
-                    var(--black)       100%
+                    var(--atlantic-deep)        0%,
+                    rgba(2,12,24,0.12)         18%,
+                    rgba(2,12,24,0.0)          35%,
+                    rgba(2,12,24,0.0)          60%,
+                    rgba(2,12,24,0.65)         80%,
+                    var(--atlantic-deep)        100%
                 ),
-                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
+                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.1) 0%, rgba(2,12,24,0.5) 100%);
             pointer-events: none;
         }
 
@@ -831,7 +834,7 @@
             font-size: clamp(2.8rem, 6vw, 5rem);
             font-weight: 300;
             line-height: 1.05;
-            color: var(--white);
+            color: var(--foam);
             margin-bottom: 1.5rem;
         }
 
@@ -856,16 +859,17 @@
         }
 
         .book-email a {
-            color: var(--gold);
+            color: var(--turquoise);
             text-decoration: none;
             transition: color 0.2s;
         }
 
-        .book-email a:hover { color: var(--gold-lt); }
+        .book-email a:hover { color: rgba(95,196,224,0.9); }
 
         /* ═══════════════ FOOTER ═══════════════ */
         footer {
-            border-top: 1px solid rgba(255,255,255,0.055);
+            background: var(--starfield);
+            border-top: 1px solid rgba(47,168,204,0.12);
             padding: 3rem;
             display: flex;
             justify-content: space-between;
@@ -898,7 +902,7 @@
             transition: color 0.2s;
         }
 
-        .f-links a:hover { color: var(--gold); }
+        .f-links a:hover { color: var(--turquoise); }
 
         .f-copy {
             font-size: 0.7rem;
@@ -990,7 +994,7 @@
         #loader {
             position: fixed;
             inset: 0;
-            background: var(--black);
+            background: var(--atlantic-deep);
             z-index: 9995;
             display: flex;
             align-items: center;
@@ -1011,7 +1015,7 @@
         .loader-line {
             width: 0px;
             height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            background: linear-gradient(to right, transparent, var(--turquoise), transparent);
         }
 
         /* ═══════════════ PUFFIN ═══════════════ */
@@ -1135,7 +1139,7 @@
         /* ═══════════════ FLEET SECTION ═══════════════ */
         .fleet-section {
             padding: 7rem 3rem;
-            background: var(--dark);
+            background: var(--atlantic-mid);
         }
 
         .fleet-inner {
@@ -1161,11 +1165,11 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2px;
-            background: rgba(201,169,110,0.07);
+            background: rgba(47,168,204,0.07);
         }
 
         .fleet-card {
-            background: var(--black);
+            background: var(--atlantic-deep);
             padding: 2.6rem 2.2rem 2.2rem;
             position: relative;
             overflow: hidden;
@@ -1177,7 +1181,7 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            background: linear-gradient(to right, transparent, var(--turquoise), transparent);
             opacity: 0;
             transition: opacity 0.4s;
         }
@@ -1190,7 +1194,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 5rem;
             font-weight: 300;
-            color: rgba(201,169,110,0.055);
+            color: rgba(47,168,204,0.055);
             line-height: 1;
             position: absolute;
             top: 1rem;
@@ -1209,8 +1213,8 @@
             font-size: 0.58rem;
             letter-spacing: 0.32em;
             text-transform: uppercase;
-            color: var(--gold);
-            border: 1px solid rgba(201,169,110,0.25);
+            color: var(--turquoise);
+            border: 1px solid rgba(47,168,204,0.25);
             display: inline-block;
             padding: 0.25rem 0.7rem;
             margin-bottom: 1rem;
@@ -1220,7 +1224,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.6rem;
             font-weight: 300;
-            color: var(--white);
+            color: var(--foam);
             line-height: 1.2;
             margin-bottom: 1rem;
         }
@@ -1248,13 +1252,13 @@
 
         .fleet-specs li::before {
             content: '·';
-            color: var(--gold);
+            color: var(--turquoise);
         }
 
         /* ═══════════════ WILDLIFE SECTION ═══════════════ */
         .wildlife-section {
             padding: 6rem 3rem 5rem;
-            background: var(--dark);
+            background: var(--atlantic-mid);
             position: relative;
             overflow: hidden;
         }
@@ -1263,7 +1267,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 50% 100%, rgba(201,169,110,0.04) 0%, transparent 60%);
+            background: radial-gradient(ellipse at 50% 100%, rgba(47,168,204,0.04) 0%, transparent 60%);
             pointer-events: none;
         }
 
@@ -1289,13 +1293,13 @@
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 2px;
-            background: rgba(201,169,110,0.06);
+            background: rgba(47,168,204,0.06);
             max-width: 1240px;
             margin: 0 auto;
         }
 
         .wildlife-card {
-            background: var(--black);
+            background: var(--atlantic-deep);
             padding: 2.8rem 1.2rem 2.2rem;
             text-align: center;
             position: relative;
@@ -1309,14 +1313,14 @@
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            background: linear-gradient(to right, transparent, var(--turquoise), transparent);
             opacity: 0;
             transition: opacity 0.4s;
         }
 
         .wildlife-card:hover::after { opacity: 1; }
-        .wildlife-card:hover { background: var(--slate); }
-        .wildlife-card:hover .wildlife-name { color: var(--gold); }
+        .wildlife-card:hover { background: var(--atlantic-light); }
+        .wildlife-card:hover .wildlife-name { color: var(--turquoise); }
 
         .wildlife-svg-wrap {
             height: 96px;
@@ -1330,7 +1334,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.15rem;
             font-weight: 400;
-            color: var(--white);
+            color: var(--foam);
             display: block;
             margin-bottom: 0.35rem;
             transition: color 0.3s;
@@ -1387,7 +1391,7 @@
         /* ═══════════════ TRUST / AWARDS SECTION ═══════════════ */
         .trust-section {
             padding: 7rem 3rem;
-            background: var(--dark);
+            background: var(--atlantic-mid);
             position: relative;
             overflow: hidden;
         }
@@ -1397,7 +1401,7 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            background: linear-gradient(to right, transparent, var(--turquoise), transparent);
             opacity: 0.3;
         }
 
@@ -1423,7 +1427,7 @@
         }
 
         .trust-lead strong {
-            color: var(--white);
+            color: var(--foam);
             font-style: normal;
             font-weight: 400;
         }
@@ -1432,12 +1436,12 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2px;
-            background: rgba(201,169,110,0.06);
+            background: rgba(47,168,204,0.06);
             margin-bottom: 5rem;
         }
 
         .trust-card {
-            background: var(--black);
+            background: var(--atlantic-deep);
             padding: 3rem 2.2rem 2.5rem;
             position: relative;
             overflow: hidden;
@@ -1448,7 +1452,7 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 2px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            background: linear-gradient(to right, transparent, var(--turquoise), transparent);
             transform: scaleX(0);
             transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
             transform-origin: left;
@@ -1460,7 +1464,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 4rem;
             font-weight: 300;
-            color: rgba(201,169,110,0.07);
+            color: rgba(47,168,204,0.07);
             line-height: 1;
             position: absolute;
             top: 1rem;
@@ -1478,8 +1482,8 @@
             font-size: 0.58rem;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            color: var(--gold);
-            border: 1px solid rgba(201,169,110,0.3);
+            color: var(--turquoise);
+            border: 1px solid rgba(47,168,204,0.3);
             display: inline-block;
             padding: 0.28rem 0.7rem;
             margin-bottom: 1rem;
@@ -1489,7 +1493,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.5rem;
             font-weight: 300;
-            color: var(--white);
+            color: var(--foam);
             line-height: 1.25;
             margin-bottom: 1rem;
         }
@@ -1503,7 +1507,7 @@
 
         .trust-means {
             font-size: 0.75rem;
-            color: var(--gold);
+            color: var(--turquoise);
             letter-spacing: 0.06em;
             padding-top: 1rem;
             border-top: 1px solid var(--faint);
@@ -1515,7 +1519,7 @@
             font-size: 0.62rem;
             letter-spacing: 0.38em;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--turquoise);
             opacity: 0.7;
             margin-bottom: 2.5rem;
         }
@@ -2234,7 +2238,7 @@
         <div class="fleet-grid">
             <div class="fleet-card reveal reveal-d1">
                 <div class="fleet-vessel-num">01</div>
-                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(47,168,204,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
                 <span class="fleet-type">Landing Tour</span>
                 <h3>Marber<br>Therese II</h3>
                 <p>Paul's flagship vessel — the primary boat for Skellig Michael Landing Tours. Purpose-built for the Atlantic crossing with covered shelter and full safety equipment.</p>
@@ -2246,7 +2250,7 @@
             </div>
             <div class="fleet-card reveal reveal-d2">
                 <div class="fleet-vessel-num">02</div>
-                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(47,168,204,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
                 <span class="fleet-type">Eco Cruise</span>
                 <h3>Skellig<br>Star</h3>
                 <p>The flagship Eco Cruise vessel. Spacious deck with panoramic views — ideal for wildlife spotting, photography, and families with young children.</p>
@@ -2258,7 +2262,7 @@
             </div>
             <div class="fleet-card reveal reveal-d3">
                 <div class="fleet-vessel-num">03</div>
-                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(47,168,204,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
                 <span class="fleet-type">Eco Cruise</span>
                 <h3>Skellig<br>Dawn</h3>
                 <p>The early riser. Skellig Dawn departs for the 10am cruise, catching the morning light as it falls on the rock and catching dolphins feeding in calm Atlantic waters.</p>
@@ -2270,7 +2274,7 @@
             </div>
             <div class="fleet-card reveal reveal-d1">
                 <div class="fleet-vessel-num">04</div>
-                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(47,168,204,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
                 <span class="fleet-type">Private Charter</span>
                 <h3>Jessica<br>Kate</h3>
                 <p>Available for private charters, photography expeditions, and small groups seeking an exclusive crossing. Contact Paul directly to discuss your requirements.</p>
@@ -2282,7 +2286,7 @@
             </div>
             <div class="fleet-card reveal reveal-d2">
                 <div class="fleet-vessel-num">05</div>
-                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(47,168,204,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
                 <span class="fleet-type">Eco Cruise</span>
                 <h3>Skellig<br>Flyer</h3>
                 <p>The afternoon and evening cruise vessel — catching Skellig Michael in the last gold of the day. Runs the 3pm and 5:15pm departures in the height of summer.</p>
@@ -2294,7 +2298,7 @@
             </div>
             <div class="fleet-card reveal reveal-d3">
                 <div class="fleet-vessel-num">06</div>
-                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(201,169,110,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
+                <svg class="fleet-icon" viewBox="0 0 48 48" fill="none" stroke="rgba(47,168,204,0.7)" stroke-width="1.5"><path d="M4 34 C10 28 22 24 24 24 C26 24 38 28 44 34"/><path d="M8 34 L12 42 L36 42 L40 34"/><path d="M24 8 L24 24"/><path d="M18 14 L24 8 L30 14"/><ellipse cx="24" cy="42" rx="20" ry="2" opacity="0.2"/></svg>
                 <span class="fleet-type">Traditional</span>
                 <h3>Mám an<br>Oraigh</h3>
                 <p>Named in Irish, this vessel carries tradition onto the water. A nod to the monks who first made this crossing — going to the edge of the world by faith alone.</p>
@@ -2553,7 +2557,7 @@
         <div class="trust-cards">
             <div class="trust-card reveal reveal-d1">
                 <div class="trust-card-num">01</div>
-                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--gold)" stroke-width="1.4">
+                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--turquoise)" stroke-width="1.4">
                     <circle cx="22" cy="22" r="18" stroke-opacity="0.3"/>
                     <path d="M22 8 L25 17 L35 17 L27 23 L30 33 L22 27 L14 33 L17 23 L9 17 L19 17 Z"/>
                 </svg>
@@ -2564,7 +2568,7 @@
             </div>
             <div class="trust-card reveal reveal-d2">
                 <div class="trust-card-num">02</div>
-                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--gold)" stroke-width="1.4">
+                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--turquoise)" stroke-width="1.4">
                     <path d="M8 22 Q8 8 22 5 Q36 8 36 22 Q36 34 22 42 Q8 34 8 22 Z" stroke-opacity="0.3"/>
                     <path d="M12 22 Q12 11 22 8 Q32 11 32 22 Q32 33 22 39 Q12 33 12 22 Z"/>
                     <path d="M17 22 L20 25 L27 18"/>
@@ -2576,7 +2580,7 @@
             </div>
             <div class="trust-card reveal reveal-d3">
                 <div class="trust-card-num">03</div>
-                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--gold)" stroke-width="1.4">
+                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--turquoise)" stroke-width="1.4">
                     <rect x="8" y="12" width="28" height="22" rx="2" stroke-opacity="0.3"/>
                     <path d="M14 12 L14 8 M30 12 L30 8"/>
                     <path d="M8 20 L36 20"/>
@@ -2589,7 +2593,7 @@
             </div>
             <div class="trust-card reveal reveal-d1">
                 <div class="trust-card-num">04</div>
-                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--gold)" stroke-width="1.4">
+                <svg class="trust-icon" viewBox="0 0 44 44" fill="none" stroke="var(--turquoise)" stroke-width="1.4">
                     <circle cx="22" cy="22" r="18" stroke-opacity="0.3"/>
                     <ellipse cx="22" cy="22" rx="8" ry="18"/>
                     <path d="M8 16 L36 16 M8 28 L36 28"/>
@@ -2965,7 +2969,7 @@ function animateMist() {
 
         mCtx.beginPath();
         mCtx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-        mCtx.fillStyle = `rgba(201,169,110,${m.opacity})`;
+        mCtx.fillStyle = `rgba(47,168,204,${m.opacity})`;
         mCtx.fill();
     });
     requestAnimationFrame(animateMist);
